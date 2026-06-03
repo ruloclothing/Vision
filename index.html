@@ -1,379 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VISION — See Different</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,700;1,300;1,700;1,800;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #101010;
+      --surface2: #161616;
+      --border: #1c1c1c;
+      --text: #ffffff;
+      --muted: #555555;
+      --muted2: #888888;
+    }
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap');
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --black:#0a0a0a;--off-white:#f0ece4;--gold:#c9a84c;--dim:#2a2a2a;
-    --muted:#888;--red:#c0392b;
-  }
-  body{background:var(--black);color:var(--off-white);font-family:'Barlow Condensed',sans-serif;overflow-x:hidden}
-  .site{max-width:100%;min-height:100vh}
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-  /* NAV */
-  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:0.5px solid #222;position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(8px)}
-  .nav-logo{display:flex;align-items:center;gap:10px}
-  .nav-links{display:flex;gap:32px;list-style:none}
-  .nav-links a{color:var(--muted);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s}
-  .nav-links a:hover{color:var(--off-white)}
-  .nav-right{display:flex;align-items:center;gap:20px}
-  .nav-cart{font-family:'Space Mono',monospace;font-size:11px;color:var(--off-white);cursor:pointer;letter-spacing:0.1em}
-  .nav-cart span{background:var(--gold);color:var(--black);border-radius:50%;width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;margin-left:4px}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-  /* HERO */
-  .hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
-  .hero-left{padding:80px 40px 80px 40px;display:flex;flex-direction:column;justify-content:flex-end;border-right:0.5px solid #222}
-  .hero-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
-  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,12vw,160px);line-height:0.88;color:var(--off-white);margin-bottom:32px;letter-spacing:0.01em}
-  .hero-sub{font-size:14px;color:var(--muted);line-height:1.7;max-width:320px;font-family:'Barlow Condensed',sans-serif;font-weight:300;letter-spacing:0.05em;margin-bottom:40px}
-  .btn-primary{display:inline-block;background:var(--off-white);color:var(--black);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:14px 32px;cursor:pointer;transition:background 0.2s,color 0.2s;border:none;text-decoration:none}
-  .btn-primary:hover{background:var(--gold);color:var(--black)}
-  .btn-outline{display:inline-block;border:0.5px solid var(--off-white);color:var(--off-white);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:14px 32px;cursor:pointer;background:transparent;transition:all 0.2s;text-decoration:none;margin-left:12px}
-  .btn-outline:hover{background:var(--off-white);color:var(--black)}
-  .hero-right{display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,#111 0%,#0a0a0a 100%)}
-  .hero-star-large{opacity:0.06;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
-  .hero-center-logo{position:relative;z-index:2}
-  .hero-scroll{position:absolute;bottom:40px;left:40px;display:flex;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.15em}
-  .scroll-line{width:40px;height:0.5px;background:var(--muted)}
-  .hero-num{position:absolute;top:40px;right:40px;font-family:'Bebas Neue',sans-serif;font-size:120px;color:#111;line-height:1}
+    /* ── GRAIN OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9000;
+    }
 
-  /* TICKER */
-  .ticker{border-top:0.5px solid #222;border-bottom:0.5px solid #222;padding:12px 0;overflow:hidden;background:#0d0d0d}
-  .ticker-inner{display:flex;gap:60px;animation:tick 20s linear infinite;white-space:nowrap}
-  .ticker-item{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:20px}
-  .ticker-item::after{content:'★';color:var(--gold);font-size:8px}
-  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* ── CUSTOM CURSOR ── */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .15s, height .15s;
+      mix-blend-mode: difference;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all .25s cubic-bezier(.23,1,.32,1);
+      mix-blend-mode: difference;
+    }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 18px; height: 18px; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 60px; height: 60px; opacity: 0; }
 
-  /* DROPS */
-  .section{padding:80px 40px}
-  .section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;border-bottom:0.5px solid #222;padding-bottom:24px}
-  .section-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-  .section-title{font-family:'Bebas Neue',sans-serif;font-size:56px;letter-spacing:0.02em;line-height:1}
-  .view-all{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;cursor:pointer;text-decoration:none;transition:color 0.2s}
-  .view-all:hover{color:var(--gold)}
-  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-  .product-card{background:#111;position:relative;overflow:hidden;cursor:pointer}
-  .product-card:hover .product-img-bg{transform:scale(1.04)}
-  .product-img-bg{height:380px;display:flex;align-items:center;justify-content:center;transition:transform 0.6s ease;position:relative}
-  .product-img-bg.p1{background:#141414}
-  .product-img-bg.p2{background:#121212}
-  .product-img-bg.p3{background:#161616}
-  .product-badge{position:absolute;top:16px;left:16px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.15em;padding:4px 10px;text-transform:uppercase}
-  .badge-new{background:var(--gold);color:var(--black)}
-  .badge-ltd{background:var(--red);color:#fff}
-  .product-info{padding:20px;border-top:0.5px solid #1a1a1a}
-  .product-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;margin-bottom:4px}
-  .product-meta{display:flex;justify-content:space-between;align-items:center}
-  .product-price{font-family:'Space Mono',monospace;font-size:12px;color:var(--gold)}
-  .product-type{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      padding: 28px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,.95) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-logo img { height: 28px; position: relative; }
+    .nav-links { display: flex; gap: 44px; list-style: none; position: relative; }
+    .nav-links a {
+      color: var(--muted2);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cart {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      transition: color .2s;
+      position: relative;
+      cursor: none;
+    }
+    .nav-cart:hover { color: white; }
 
-  /* LOOKBOOK */
-  .lookbook{background:#080808;padding:80px 40px}
-  .lookbook-grid{display:grid;grid-template-columns:2fr 1fr;gap:2px;margin-top:48px}
-  .lookbook-main{background:#111;height:520px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-  .lookbook-side{display:grid;gap:2px}
-  .lookbook-thumb{background:#111;height:258px;display:flex;align-items:center;justify-content:center}
-  .lookbook-overlay{position:absolute;bottom:0;left:0;right:0;padding:32px;background:linear-gradient(transparent,rgba(0,0,0,0.85))}
-  .lookbook-season{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);margin-bottom:8px;text-transform:uppercase}
-  .lookbook-name{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:0.02em}
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 160px 52px 120px;
+      text-align: center;
+    }
+    .hero-radial {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 55% 45%, #191919 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, #111 0%, transparent 60%);
+    }
+    .hero-icon-bg {
+      position: absolute;
+      width: 700px; height: 700px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('VISION_ICON_WHITE.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.03;
+      animation: slowSpin 80s linear infinite;
+    }
+    .hero-content { position: relative; z-index: 2; }
 
-  /* MANIFESTO */
-  .manifesto{padding:100px 40px;text-align:center;border-top:0.5px solid #1a1a1a;border-bottom:0.5px solid #1a1a1a;position:relative;overflow:hidden}
-  .manifesto-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:200px;color:#111;white-space:nowrap;pointer-events:none;letter-spacing:0.02em}
-  .manifesto-quote{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,80px);line-height:1.05;max-width:800px;margin:0 auto 32px;position:relative;z-index:2}
-  .manifesto-attr{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.15em;position:relative;z-index:2}
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: slideUp .7s .1s ease forwards;
+    }
+    .hero-logo-img {
+      width: 300px;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: slideUp .7s .2s ease forwards;
+      filter: drop-shadow(0 0 40px rgba(255,255,255,0.1));
+    }
+    .hero-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(72px, 11vw, 148px);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      opacity: 0;
+      animation: slideUp .7s .35s ease forwards;
+    }
+    .hero-headline .stroke {
+      -webkit-text-stroke: 2px white;
+      color: transparent;
+    }
+    .hero-sub {
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      margin-top: 28px;
+      opacity: 0;
+      animation: slideUp .7s .5s ease forwards;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 56px;
+      opacity: 0;
+      animation: slideUp .7s .65s ease forwards;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 17px 52px;
+      background: white;
+      color: black;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 16px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 2px solid white;
+      transition: all .3s ease;
+      cursor: none;
+    }
+    .btn-primary:hover { background: transparent; color: white; }
+    .btn-ghost {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: all .2s;
+      cursor: none;
+    }
+    .btn-ghost:hover { color: white; border-color: white; }
 
-  /* NEWSLETTER */
-  .newsletter{padding:80px 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .nl-title{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1}
-  .nl-sub{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--muted);margin-top:12px;line-height:1.7;letter-spacing:0.05em}
-  .nl-form{display:flex;gap:0}
-  .nl-input{flex:1;background:#111;border:0.5px solid #333;color:var(--off-white);font-family:'Space Mono',monospace;font-size:11px;padding:14px 16px;outline:none;letter-spacing:0.1em}
-  .nl-input::placeholder{color:#444}
-  .nl-input:focus{border-color:var(--gold)}
-  .nl-btn{background:var(--gold);color:var(--black);border:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;padding:14px 24px;cursor:pointer;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s}
-  .nl-btn:hover{opacity:0.85}
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+      opacity: 0;
+      animation: slideUp .7s .9s ease forwards;
+    }
+    .hero-scroll-indicator span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: pulse 2.5s ease infinite;
+    }
 
-  /* FOOTER */
-  footer{border-top:0.5px solid #222;padding:40px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
-  .footer-brand p{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);margin-top:12px;line-height:1.7;max-width:220px;letter-spacing:0.05em}
-  .footer-col h4{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
-  .footer-col ul{list-style:none}
-  .footer-col li{margin-bottom:10px}
-  .footer-col a{color:var(--muted);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:0.05em;transition:color 0.2s}
-  .footer-col a:hover{color:var(--off-white)}
-  .footer-bottom{border-top:0.5px solid #1a1a1a;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
-  .footer-bottom p{font-family:'Space Mono',monospace;font-size:10px;color:#444;letter-spacing:0.1em}
-</style>
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+    .marquee-inner {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-inner:hover { animation-play-state: paused; }
+    .marquee-chunk {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding-right: 0;
+    }
+    .mq-item {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 0 40px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .mq-star {
+      width: 18px; height: 18px;
+      background-image: url('VISION_ICON_WHITE.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: .35;
+      flex-shrink: 0;
+    }
 
-<div class="site">
-  <!-- NAV -->
+    /* ── SECTION SHARED ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(44px, 6vw, 76px);
+      text-transform: uppercase;
+      line-height: .95;
+    }
+    .section-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: all .2s;
+      cursor: none;
+    }
+    .section-link:hover { color: white; border-color: white; }
+
+    /* ── DROPS / PRODUCTS ── */
+    .drops-section { padding: 120px 52px; }
+    .section-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card { cursor: none; }
+
+    .product-thumb {
+      aspect-ratio: 3/4;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 18px;
+      transition: transform .4s cubic-bezier(.23,1,.32,1);
+    }
+    .product-card:hover .product-thumb { transform: scale(1.02); }
+
+    .thumb-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Individual product BGs */
+    .p1 .thumb-inner { background: linear-gradient(160deg, #141414 0%, #0d0d0d 100%); }
+    .p2 .thumb-inner { background: linear-gradient(160deg, #0c0c0c 0%, #1a1a1a 100%); }
+    .p3 .thumb-inner { background: linear-gradient(180deg, #101010 0%, #181818 100%); }
+    .p4 .thumb-inner { background: linear-gradient(140deg, #171717 0%, #0b0b0b 100%); }
+
+    /* clothing mockups using CSS */
+    .tee-shape {
+      width: 80px; height: 90px;
+      position: relative;
+    }
+    .tee-shape::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 10px;
+      width: 60px; height: 70px;
+      background: rgba(255,255,255,.07);
+      border-radius: 3px 3px 6px 6px;
+    }
+    .tee-shape::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 80px; height: 30px;
+      background: rgba(255,255,255,.07);
+      clip-path: polygon(20px 0, 60px 0, 70px 14px, 80px 14px, 80px 30px, 60px 30px, 60px 14px, 20px 14px, 20px 30px, 0 30px, 0 14px, 10px 14px);
+    }
+
+    .hoodie-shape {
+      width: 84px; height: 96px;
+      position: relative;
+    }
+    .hoodie-shape::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 8px;
+      width: 68px; height: 76px;
+      background: rgba(255,255,255,.07);
+      border-radius: 3px 3px 8px 8px;
+    }
+    .hoodie-shape::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 84px; height: 36px;
+      background: rgba(255,255,255,.07);
+      clip-path: polygon(18px 0, 66px 0, 84px 20px, 84px 36px, 66px 36px, 66px 20px, 18px 20px, 18px 36px, 0 36px, 0 20px);
+    }
+
+    .product-icon-overlay {
+      position: absolute;
+      bottom: 18px; right: 16px;
+      width: 44px;
+      opacity: .12;
+      transition: opacity .3s;
+      background-image: url('VISION_ICON_WHITE.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 44px;
+    }
+    .product-card:hover .product-icon-overlay { opacity: .28; }
+
+    .product-badge-tag {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: white;
+      color: black;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .product-hover-add {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      color: black;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 14px;
+      transform: translateY(100%);
+      transition: transform .3s cubic-bezier(.23,1,.32,1);
+      cursor: none;
+    }
+    .product-card:hover .product-hover-add { transform: translateY(0); }
+
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 19px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .product-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-type {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+    .product-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 1px;
+    }
+
+    /* ── STATEMENT SECTION ── */
+    .statement-section {
+      padding: 140px 52px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .statement-icon-bg {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 560px; height: 560px;
+      background-image: url('VISION_ICON_WHITE.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: .04;
+    }
+    .statement-content { position: relative; z-index: 1; max-width: 720px; }
+    .statement-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(52px, 7vw, 96px);
+      text-transform: uppercase;
+      line-height: .95;
+      margin-bottom: 36px;
+    }
+    .statement-headline .stroke {
+      -webkit-text-stroke: 1.5px white;
+      color: transparent;
+    }
+    .statement-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted2);
+      max-width: 460px;
+      margin-bottom: 48px;
+    }
+
+    /* ── FULLWIDTH BANNER ── */
+    .banner-section {
+      padding: 100px 52px;
+      background: #fff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner-icon-bg {
+      position: absolute;
+      left: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 480px; height: 480px;
+      background-image: url('VISION_ICON_BLACK.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: .06;
+    }
+    .banner-text { position: relative; z-index: 1; }
+    .banner-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .banner-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(48px, 6vw, 80px);
+      text-transform: uppercase;
+      line-height: .95;
+      color: #000;
+    }
+    .banner-headline .stroke-dark {
+      -webkit-text-stroke: 2px #000;
+      color: transparent;
+    }
+    .banner-cta {
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+    .btn-dark {
+      display: inline-block;
+      padding: 18px 52px;
+      background: black;
+      color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 16px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 2px solid black;
+      transition: all .3s ease;
+      cursor: none;
+    }
+    .btn-dark:hover { background: transparent; color: black; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #040404;
+      padding: 88px 52px 52px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 72px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand-icon {
+      width: 56px; height: 56px;
+      background-image: url('VISION_ICON_WHITE.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-bottom: 20px;
+      opacity: .9;
+    }
+    .footer-brand-blurb {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 240px;
+    }
+    .footer-col-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links-list a {
+      color: var(--muted2);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .footer-links-list a:hover { color: white; }
+    .newsletter-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .newsletter-blurb {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .newsletter-row {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .nl-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 13px 20px;
+      color: white;
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      outline: none;
+    }
+    .nl-input::placeholder { color: #333; }
+    .nl-btn {
+      padding: 13px 22px;
+      background: white;
+      color: black;
+      border: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 999px;
+      cursor: none;
+      transition: background .2s;
+    }
+    .nl-btn:hover { background: #ddd; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 36px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: #2a2a2a;
+      font-weight: 300;
+    }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a {
+      font-size: 12px;
+      color: #2a2a2a;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-bottom-links a:hover { color: var(--muted); }
+    .footer-logo-bottom {
+      width: 80px;
+      opacity: .2;
+      filter: invert(1);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slowSpin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .3; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── UTILS ── */
+    a { cursor: none; }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ─── NAV ─── -->
   <nav>
     <div class="nav-logo">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <polygon points="16,2 19.5,12 30,12 21.5,18.5 24.5,29 16,22.5 7.5,29 10.5,18.5 2,12 12.5,12" fill="#f0ece4"/>
-        <ellipse cx="16" cy="16" rx="5" ry="3.2" fill="#0a0a0a"/>
-        <ellipse cx="16" cy="16" rx="2.2" ry="2.2" fill="#f0ece4"/>
-        <ellipse cx="16" cy="16" rx="1" ry="1" fill="#0a0a0a"/>
-        <ellipse cx="14.8" cy="15.2" rx="0.5" ry="0.5" fill="#f0ece4" opacity="0.7"/>
-      </svg>
-      <svg width="90" height="20" viewBox="0 0 90 20">
-        <text x="0" y="16" font-family="Bebas Neue, sans-serif" font-size="20" fill="#f0ece4" letter-spacing="3">VISION</text>
-      </svg>
+      <img src="VISION_LOGO_WHITE.png" alt="VISION" />
     </div>
     <ul class="nav-links">
-      <li><a href="#">New Drops</a></li>
-      <li><a href="#">Collections</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Drops</a></li>
       <li><a href="#">Lookbook</a></li>
       <li><a href="#">About</a></li>
     </ul>
-    <div class="nav-right">
-      <div class="nav-cart">BAG<span>2</span></div>
-    </div>
+    <div class="nav-cart">Cart (0)</div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ─── HERO ─── -->
   <section class="hero">
-    <div class="hero-left">
-      <p class="hero-tag">SS25 — See What Others Miss</p>
-      <h1 class="hero-title">THE<br>EYE<br>SEES</h1>
-      <p class="hero-sub">Vision Clothing is built for those who observe more than they speak. Every piece carries a mark — the star that watches.</p>
-      <div>
-        <a class="btn-primary" href="#">Shop Now</a>
-        <a class="btn-outline" href="#">Lookbook</a>
-      </div>
-      <div class="hero-scroll">
-        <span class="scroll-line"></span>
-        SCROLL
+    <div class="hero-radial"></div>
+    <div class="hero-icon-bg"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">SS25 Collection — Now Available</p>
+      <img class="hero-logo-img" src="VISION_LOGO_WHITE.png" alt="VISION" />
+      <h1 class="hero-headline">
+        See<br /><span class="stroke">Different</span>
+      </h1>
+      <p class="hero-sub">Streetwear built for those who look closer</p>
+      <div class="hero-actions">
+        <a href="#shop" class="btn-primary">Shop Now</a>
+        <a href="#about" class="btn-ghost">Our Story</a>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="hero-num">01</div>
-      <svg class="hero-star-large" width="600" height="600" viewBox="0 0 100 100">
-        <polygon points="50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35" fill="#f0ece4"/>
-      </svg>
-      <div class="hero-center-logo">
-        <svg width="260" height="200" viewBox="0 0 260 200">
-          <!-- Shooting star large -->
-          <polygon points="90,100 107,55 124,100 165,83 124,107 143,152 90,120 37,152 56,107 15,83 56,100" fill="#f0ece4"/>
-          <!-- Trail -->
-          <line x1="145" y1="83" x2="245" y2="60" stroke="#f0ece4" stroke-width="3" stroke-linecap="round"/>
-          <line x1="145" y1="90" x2="250" y2="90" stroke="#f0ece4" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-          <!-- Eye in star -->
-          <ellipse cx="90" cy="100" rx="18" ry="11" fill="#0a0a0a"/>
-          <ellipse cx="90" cy="100" rx="8" ry="8" fill="#f0ece4"/>
-          <ellipse cx="90" cy="100" rx="4" ry="4" fill="#0a0a0a"/>
-          <ellipse cx="87.5" cy="98" rx="1.5" ry="1.5" fill="#f0ece4" opacity="0.8"/>
-          <!-- VISION text -->
-          <text x="155" y="78" font-family="Bebas Neue, sans-serif" font-size="32" fill="#f0ece4" letter-spacing="4">VISION</text>
-        </svg>
-      </div>
+
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-bar"></div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span class="ticker-item">New Drop Available</span>
-      <span class="ticker-item">Free Shipping Over $150</span>
-      <span class="ticker-item">SS25 Collection</span>
-      <span class="ticker-item">Limited Quantities</span>
-      <span class="ticker-item">See What Others Miss</span>
-      <span class="ticker-item">New Drop Available</span>
-      <span class="ticker-item">Free Shipping Over $150</span>
-      <span class="ticker-item">SS25 Collection</span>
-      <span class="ticker-item">Limited Quantities</span>
-      <span class="ticker-item">See What Others Miss</span>
+  <!-- ─── MARQUEE ─── -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <!-- duplicated for seamless loop -->
+      <div class="marquee-chunk">
+        <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
+        <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
+        <div class="mq-item"><div class="mq-star"></div> See Different</div>
+        <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
+        <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
+        <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
+        <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
+        <div class="mq-item"><div class="mq-star"></div> See Different</div>
+        <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
+        <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
+      </div>
+      <div class="marquee-chunk" aria-hidden="true">
+        <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
+        <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
+        <div class="mq-item"><div class="mq-star"></div> See Different</div>
+        <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
+        <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
+        <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
+        <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
+        <div class="mq-item"><div class="mq-star"></div> See Different</div>
+        <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
+        <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
+      </div>
     </div>
   </div>
 
-  <!-- PRODUCTS -->
-  <section class="section">
-    <div class="section-header">
+  <!-- ─── NEW DROPS ─── -->
+  <section class="drops-section" id="shop">
+    <div class="section-row">
       <div>
-        <p class="section-label">Latest Releases</p>
-        <h2 class="section-title">New Drops</h2>
+        <p class="section-label">Just Dropped</p>
+        <h2 class="section-title">New Arrivals</h2>
       </div>
-      <a class="view-all" href="#">View All →</a>
+      <a href="#" class="section-link">View All Products</a>
     </div>
-    <div class="products-grid">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-img-bg p1">
-          <span class="product-badge badge-new">New</span>
-          <svg width="140" height="140" viewBox="0 0 140 140" opacity="0.85">
-            <!-- T-shirt silhouette -->
-            <path d="M35,30 L15,55 L35,62 L35,115 L105,115 L105,62 L125,55 L105,30 L88,42 C85,50 55,50 52,42 Z" fill="#1e1e1e" stroke="#333" stroke-width="0.5"/>
-            <polygon points="70,58 74,70 87,70 77,77 80,89 70,82 60,89 63,77 53,70 66,70" fill="#c9a84c" opacity="0.9"/>
-            <ellipse cx="70" cy="70" rx="5" ry="3" fill="#1e1e1e"/>
-            <ellipse cx="70" cy="70" rx="2" ry="2" fill="#c9a84c"/>
-          </svg>
-        </div>
-        <div class="product-info">
-          <p class="product-name">STAR EYE HEAVYWEIGHT TEE</p>
-          <div class="product-meta">
-            <span class="product-type">T-Shirt</span>
-            <span class="product-price">$65</span>
+
+    <div class="product-grid">
+
+      <!-- Card 1 -->
+      <div class="product-card p1">
+        <div class="product-thumb">
+          <div class="thumb-inner">
+            <div class="tee-shape"></div>
           </div>
+          <div class="product-icon-overlay"></div>
+          <div class="product-badge-tag">New</div>
+          <div class="product-hover-add">Add to Cart</div>
+        </div>
+        <div class="product-name">Core Tee — Black</div>
+        <div class="product-foot">
+          <span class="product-type">T-Shirt</span>
+          <span class="product-price">$58</span>
         </div>
       </div>
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-img-bg p2">
-          <span class="product-badge badge-ltd">Ltd Ed</span>
-          <svg width="140" height="160" viewBox="0 0 140 160" opacity="0.85">
-            <!-- Hoodie silhouette -->
-            <path d="M40,35 L15,65 L38,72 L38,135 L102,135 L102,72 L125,65 L100,35 L90,45 C87,52 53,52 50,45 Z" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="0.5"/>
-            <path d="M55,35 Q70,58 85,35" fill="none" stroke="#2a2a2a" stroke-width="1"/>
-            <path d="M38,72 L38,135" stroke="#222" stroke-width="0.5"/>
-            <polygon points="70,80 73.5,90 84,90 75.5,96 78.5,107 70,101 61.5,107 64.5,96 56,90 66.5,90" fill="#f0ece4" opacity="0.9"/>
-            <ellipse cx="70" cy="90" rx="5.5" ry="3.5" fill="#1a1a1a"/>
-            <ellipse cx="70" cy="90" rx="2.5" ry="2.5" fill="#f0ece4"/>
-            <ellipse cx="70" cy="90" rx="1.1" ry="1.1" fill="#1a1a1a"/>
-          </svg>
-        </div>
-        <div class="product-info">
-          <p class="product-name">COSMIC OBSERVER HOODIE</p>
-          <div class="product-meta">
-            <span class="product-type">Hoodie</span>
-            <span class="product-price">$140</span>
+
+      <!-- Card 2 -->
+      <div class="product-card p2">
+        <div class="product-thumb">
+          <div class="thumb-inner">
+            <div class="hoodie-shape"></div>
           </div>
+          <div class="product-icon-overlay"></div>
+          <div class="product-badge-tag">Best Seller</div>
+          <div class="product-hover-add">Add to Cart</div>
+        </div>
+        <div class="product-name">Spark Hoodie</div>
+        <div class="product-foot">
+          <span class="product-type">Hoodie</span>
+          <span class="product-price">$128</span>
         </div>
       </div>
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-img-bg p3">
-          <svg width="130" height="140" viewBox="0 0 130 140" opacity="0.85">
-            <!-- Cap silhouette -->
-            <path d="M20,75 Q65,30 110,75" fill="#181818" stroke="#2a2a2a" stroke-width="0.5"/>
-            <rect x="20" y="73" width="90" height="38" rx="4" fill="#181818" stroke="#2a2a2a" stroke-width="0.5"/>
-            <rect x="10" y="108" width="55" height="8" rx="2" fill="#141414" stroke="#222" stroke-width="0.5"/>
-            <polygon points="65,60 67.5,67.5 75,67.5 69,72 71.5,80 65,75.5 58.5,80 61,72 55,67.5 62.5,67.5" fill="#c9a84c" opacity="0.9"/>
-            <ellipse cx="65" cy="69" rx="3.5" ry="2.2" fill="#181818"/>
-            <ellipse cx="65" cy="69" rx="1.5" ry="1.5" fill="#c9a84c"/>
-          </svg>
-        </div>
-        <div class="product-info">
-          <p class="product-name">VISION STAR SNAPBACK</p>
-          <div class="product-meta">
-            <span class="product-type">Headwear</span>
-            <span class="product-price">$48</span>
+
+      <!-- Card 3 -->
+      <div class="product-card p3">
+        <div class="product-thumb">
+          <div class="thumb-inner">
+            <div class="tee-shape"></div>
           </div>
+          <div class="product-icon-overlay"></div>
+          <div class="product-hover-add">Add to Cart</div>
+        </div>
+        <div class="product-name">Halftone Tee</div>
+        <div class="product-foot">
+          <span class="product-type">T-Shirt</span>
+          <span class="product-price">$62</span>
         </div>
       </div>
+
+      <!-- Card 4 -->
+      <div class="product-card p4">
+        <div class="product-thumb">
+          <div class="thumb-inner">
+            <div class="hoodie-shape"></div>
+          </div>
+          <div class="product-icon-overlay"></div>
+          <div class="product-badge-tag">Limited</div>
+          <div class="product-hover-add">Add to Cart</div>
+        </div>
+        <div class="product-name">Stellar Crewneck</div>
+        <div class="product-foot">
+          <span class="product-type">Crewneck</span>
+          <span class="product-price">$114</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto">
-    <div class="manifesto-bg-text">VISION</div>
-    <h2 class="manifesto-quote">Wear the mark of those who see beyond the surface.</h2>
-    <p class="manifesto-attr">— Vision Clothing, Est. 2024</p>
-  </section>
-
-  <!-- LOOKBOOK -->
-  <section class="lookbook">
-    <div class="section-header">
-      <div>
-        <p class="section-label">SS25 Campaign</p>
-        <h2 class="section-title">Lookbook</h2>
-      </div>
-      <a class="view-all" href="#">Full Lookbook →</a>
-    </div>
-    <div class="lookbook-grid">
-      <div class="lookbook-main">
-        <svg width="200" height="200" viewBox="0 0 200 200" opacity="0.12">
-          <polygon points="100,10 119,68 180,68 131,104 149,162 100,126 51,162 69,104 20,68 81,68" fill="#f0ece4"/>
-        </svg>
-        <div class="lookbook-overlay">
-          <p class="lookbook-season">Look 01 / SS25</p>
-          <p class="lookbook-name">THE WATCHER</p>
-        </div>
-        <!-- Central brand mark overlay -->
-        <svg width="80" height="80" viewBox="0 0 80 80" style="position:absolute;opacity:0.15">
-          <polygon points="40,4 48,28 74,28 53,43 61,67 40,52 19,67 27,43 6,28 32,28" fill="#f0ece4"/>
-        </svg>
-      </div>
-      <div class="lookbook-side">
-        <div class="lookbook-thumb" style="background:#0f0f0f;position:relative;overflow:hidden">
-          <svg width="60" height="60" viewBox="0 0 60 60" opacity="0.15">
-            <polygon points="30,3 36,21 55,21 40,32 46,50 30,39 14,50 20,32 5,21 24,21" fill="#f0ece4"/>
-          </svg>
-          <div style="position:absolute;bottom:20px;left:20px">
-            <p style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--gold);margin-bottom:4px;text-transform:uppercase">Look 02</p>
-            <p style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em">OBSERVER</p>
-          </div>
-        </div>
-        <div class="lookbook-thumb" style="background:#0d0d0d;position:relative;overflow:hidden">
-          <svg width="60" height="60" viewBox="0 0 60 60" opacity="0.15">
-            <polygon points="30,3 36,21 55,21 40,32 46,50 30,39 14,50 20,32 5,21 24,21" fill="#c9a84c"/>
-          </svg>
-          <div style="position:absolute;bottom:20px;left:20px">
-            <p style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--gold);margin-bottom:4px;text-transform:uppercase">Look 03</p>
-            <p style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em">CELESTIAL</p>
-          </div>
-        </div>
-      </div>
+  <!-- ─── STATEMENT / ABOUT ─── -->
+  <section class="statement-section" id="about">
+    <div class="statement-icon-bg"></div>
+    <div class="statement-content">
+      <p class="section-label">About Vision</p>
+      <h2 class="statement-headline">
+        Built For<br /><span class="stroke">The Ones</span><br />Who Notice
+      </h2>
+      <p class="statement-body">
+        VISION is a streetwear brand built around clarity — the clarity of knowing what you stand for and wearing it without apology. Every piece is made for people who see the world differently and aren't afraid to show it.
+      </p>
+      <a href="#" class="btn-primary" style="font-size:15px; padding: 15px 44px;">Our Story</a>
     </div>
   </section>
 
-  <!-- NEWSLETTER -->
-  <section class="newsletter">
-    <div>
-      <p style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px">Stay in the Know</p>
-      <h2 class="nl-title">FIRST TO<br>SEE IT.</h2>
-      <p class="nl-sub">Get early access to drops, exclusive lookbook releases, and Vision news before anyone else.</p>
+  <!-- ─── WHITE BANNER ─── -->
+  <section class="banner-section">
+    <div class="banner-icon-bg"></div>
+    <div class="banner-text">
+      <p class="banner-label">New Season</p>
+      <h2 class="banner-headline">
+        The SS25<br /><span class="stroke-dark">Drop Is Live</span>
+      </h2>
     </div>
-    <div>
-      <div class="nl-form" style="margin-bottom:12px">
-        <input class="nl-input" placeholder="your@email.com" type="email">
-        <button class="nl-btn">Subscribe</button>
-      </div>
-      <p style="font-family:'Space Mono',monospace;font-size:9px;color:#444;letter-spacing:0.1em">No spam. Unsubscribe anytime.</p>
+    <div class="banner-cta">
+      <a href="#" class="btn-dark">Shop the Drop</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ─── FOOTER ─── -->
   <footer>
-    <div class="footer-brand">
-      <svg width="28" height="28" viewBox="0 0 32 32">
-        <polygon points="16,2 19.5,12 30,12 21.5,18.5 24.5,29 16,22.5 7.5,29 10.5,18.5 2,12 12.5,12" fill="#f0ece4"/>
-        <ellipse cx="16" cy="16" rx="5" ry="3.2" fill="#0a0a0a"/>
-        <ellipse cx="16" cy="16" rx="2.2" ry="2.2" fill="#f0ece4"/>
-        <ellipse cx="16" cy="16" rx="1" ry="1" fill="#0a0a0a"/>
-      </svg>
-      <p style="margin-top:12px">Clothing made for those who see more. Every stitch carries intention.</p>
+    <div class="footer-top">
+
+      <div>
+        <div class="footer-brand-icon" role="img" aria-label="VISION icon"></div>
+        <p class="footer-brand-blurb">
+          Streetwear made for those who look closer. Limited drops, worldwide shipping.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer-col-label">Navigate</p>
+        <ul class="footer-links-list">
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Lookbook</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="newsletter-label">Stay in the loop</p>
+        <p class="newsletter-blurb">Early access to drops, restocks, and exclusive releases.</p>
+        <div class="newsletter-row">
+          <input class="nl-input" type="email" placeholder="your@email.com" />
+          <button class="nl-btn">Join</button>
+        </div>
+      </div>
+
     </div>
-    <div class="footer-col">
-      <h4>Shop</h4>
-      <ul>
-        <li><a href="#">New Drops</a></li>
-        <li><a href="#">T-Shirts</a></li>
-        <li><a href="#">Hoodies</a></li>
-        <li><a href="#">Accessories</a></li>
-        <li><a href="#">Sale</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Info</h4>
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Sizing Guide</a></li>
-        <li><a href="#">Shipping</a></li>
-        <li><a href="#">Returns</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Follow</h4>
-      <ul>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">TikTok</a></li>
-        <li><a href="#">Twitter</a></li>
-      </ul>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 VISION. All rights reserved.</p>
+      <img class="footer-logo-bottom" src="VISION_LOGO_BLACK.png" alt="VISION" />
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Shipping</a>
+      </div>
     </div>
   </footer>
-  <div class="footer-bottom">
-    <p>© 2025 Vision Clothing. All rights reserved.</p>
-    <p>Privacy Policy · Terms</p>
-  </div>
-</div>
+
+  <script>
+    // Custom cursor tracking
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursor-ring');
+    let rx = 0, ry = 0, mx = 0, my = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Nav scroll tint
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.backdropFilter = 'blur(20px)';
+      } else {
+        nav.style.backdropFilter = 'none';
+      }
+    });
+
+    // Scroll-reveal for product cards
+    const cards = document.querySelectorAll('.product-card');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          e.target.style.animation = `slideUp .6s ${i * 0.1}s ease forwards`;
+          e.target.style.opacity = '0';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    cards.forEach(c => {
+      c.style.opacity = '0';
+      io.observe(c);
+    });
+
+    // smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+  </script>
+</body>
+</html>
