@@ -36,6 +36,70 @@
     .nav-cart { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted2); transition: color .2s; cursor: none; }
     .nav-cart:hover { color: white; }
 
+    /* ── HAMBURGER ─────────────────────────── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: none; padding: 6px; position: relative; z-index: 600; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: white; transition: all .3s ease; transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ───────────────────────── */
+    .mobile-menu { position: fixed; inset: 0; background: #030303; z-index: 700; display: flex; flex-direction: column; padding: 24px 28px 44px; transform: translateX(100%); transition: transform .45s cubic-bezier(.23,1,.32,1); overflow: hidden; }
+    .mobile-menu.open { transform: translateX(0); }
+    .mm-bg { position: absolute; width: 280px; height: 280px; bottom: -50px; right: -50px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .025; pointer-events: none; }
+    .mm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; position: relative; }
+    .mm-logo { height: 22px; }
+    .mm-close { background: none; border: none; color: #444; font-size: 20px; cursor: none; padding: 4px; transition: color .2s; line-height: 1; }
+    .mm-close:hover { color: white; }
+    .mm-links { display: flex; flex-direction: column; flex: 1; position: relative; }
+    .mm-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(52px,15vw,76px); text-transform: uppercase; color: white; text-decoration: none; line-height: 1.05; letter-spacing: -1px; border-bottom: 1px solid #111; padding: 10px 0; transition: color .2s, padding-left .2s; }
+    .mm-links a:hover { color: #444; padding-left: 8px; }
+    .mm-links a.active { color: white; }
+    .mm-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid #141414; margin-top: 20px; position: relative; }
+    .mm-cart-btn { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: #444; cursor: none; transition: color .2s; }
+    .mm-cart-btn:hover { color: white; }
+    .mm-tagline { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #222; }
+
+    /* ── MOBILE FILTER PAGE ────────────────── */
+    .mobile-filter-page {
+      position: fixed; inset: 0; background: #040404; z-index: 800;
+      display: flex; flex-direction: column;
+      transform: translateY(100%); transition: transform .45s cubic-bezier(.23,1,.32,1);
+    }
+    .mobile-filter-page.open { transform: translateY(0); }
+    .mfp-header { display: flex; align-items: flex-end; justify-content: space-between; padding: 48px 28px 24px; border-bottom: 1px solid var(--border); }
+    .mfp-titles { }
+    .mfp-eyebrow { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:11px; letter-spacing:5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .mfp-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic; font-size:60px; text-transform:uppercase; line-height:.9; }
+    .mfp-close { background:none; border:none; color:var(--muted); font-size:20px; cursor:none; padding:4px; transition:color .2s; line-height:1; margin-bottom:8px; }
+    .mfp-close:hover { color:white; }
+    .mfp-body { flex:1; overflow-y:auto; padding:32px 28px; }
+    .mfp-body::-webkit-scrollbar { width:2px; }
+    .mfp-body::-webkit-scrollbar-thumb { background:#222; }
+    .mfp-group { margin-bottom:40px; }
+    .mfp-group-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+    .mfp-options { display:flex; flex-direction:column; }
+    .mfp-option-btn { background:none; border:none; border-bottom:1px solid #111; color:var(--muted2); font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic; font-size:32px; text-transform:uppercase; text-align:left; padding:14px 0; cursor:none; transition:color .2s, padding-left .2s; display:flex; justify-content:space-between; align-items:center; }
+    .mfp-option-btn:hover { color:white; padding-left:6px; }
+    .mfp-option-btn.active { color:white; }
+    .mfp-option-btn.active::after { content:''; width:8px; height:8px; background:white; border-radius:50%; flex-shrink:0; }
+    .mfp-sort-btn { background:none; border:none; border-bottom:1px solid #111; color:var(--muted2); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:20px; text-transform:uppercase; text-align:left; padding:14px 0; cursor:none; transition:color .2s; display:flex; justify-content:space-between; align-items:center; }
+    .mfp-sort-btn:hover { color:white; }
+    .mfp-sort-btn.active { color:white; }
+    .mfp-sort-btn.active::after { content:''; width:6px; height:6px; background:white; border-radius:50%; flex-shrink:0; }
+    .mfp-footer { padding:20px 28px 40px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:10px; }
+    .mfp-apply { display:block; width:100%; padding:18px; background:white; color:black; font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic; font-size:15px; letter-spacing:3px; text-transform:uppercase; border:2px solid white; border-radius:999px; cursor:none; transition:all .3s; text-align:center; }
+    .mfp-apply:hover { background:transparent; color:white; }
+    .mfp-clear { display:block; width:100%; padding:14px; background:transparent; color:var(--muted); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-style:italic; font-size:13px; letter-spacing:3px; text-transform:uppercase; border:1px solid var(--border); border-radius:999px; cursor:none; transition:all .3s; text-align:center; }
+    .mfp-clear:hover { border-color:var(--muted); color:var(--muted2); }
+
+    /* ── MOBILE FILTER TRIGGER ─────────────── */
+    .mobile-filter-bar { display: none; padding: 0 22px 20px; }
+    .mobile-filter-trigger { display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center; background: none; border: 1px solid var(--border); color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; padding: 13px 20px; border-radius: 999px; cursor: none; transition: all .2s; }
+    .mobile-filter-trigger:hover { border-color: white; color: white; }
+    .mobile-filter-trigger .filter-count { background: white; color: black; font-size: 10px; width: 17px; height: 17px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-style: normal; }
+    .mobile-filter-trigger .filter-count.show { display: flex; }
+
     .page-header { padding: 160px 52px 72px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
     .page-header-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, #141414 0%, transparent 70%); }
     .page-header-icon { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .03; }
@@ -79,7 +143,6 @@
     .product-thumb { aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; position: relative; margin-bottom: 16px; transition: transform .4s cubic-bezier(.23,1,.32,1); }
     .product-card:hover .product-thumb { transform: scale(1.02); }
     .thumb-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-
     .p1 .thumb-inner { background: linear-gradient(160deg,#141414 0%,#0d0d0d 100%); }
     .p2 .thumb-inner { background: linear-gradient(160deg,#0c0c0c 0%,#1a1a1a 100%); }
     .p3 .thumb-inner { background: linear-gradient(180deg,#101010 0%,#181818 100%); }
@@ -88,7 +151,6 @@
     .p6 .thumb-inner { background: linear-gradient(170deg,#0e0e0e 0%,#161616 100%); }
     .p7 .thumb-inner { background: linear-gradient(145deg,#1a1a1a 0%,#0a0a0a 100%); }
     .p8 .thumb-inner { background: linear-gradient(165deg,#131313 0%,#1c1c1c 100%); }
-
     .tee-shape { width: 80px; height: 90px; position: relative; }
     .tee-shape::before { content: ''; position: absolute; bottom: 0; left: 10px; width: 60px; height: 70px; background: rgba(255,255,255,.07); border-radius: 3px 3px 6px 6px; }
     .tee-shape::after { content: ''; position: absolute; top: 0; left: 0; width: 80px; height: 30px; background: rgba(255,255,255,.07); clip-path: polygon(20px 0,60px 0,70px 14px,80px 14px,80px 30px,60px 30px,60px 14px,20px 14px,20px 30px,0 30px,0 14px,10px 14px); }
@@ -101,7 +163,6 @@
     .pants-shape { width: 70px; height: 96px; position: relative; }
     .pants-shape::before { content: ''; position: absolute; top: 0; left: 5px; width: 60px; height: 44px; background: rgba(255,255,255,.07); border-radius: 4px 4px 0 0; }
     .pants-shape::after { content: ''; position: absolute; bottom: 0; left: 0; width: 70px; height: 58px; background: rgba(255,255,255,.07); clip-path: polygon(0 0, 30px 0, 35px 58px, 40px 0, 70px 0, 70px 58px, 40px 58px, 35px 10px, 30px 58px, 0 58px); }
-
     .product-icon-overlay { position: absolute; bottom: 18px; right: 16px; width: 40px; height: 40px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .1; transition: opacity .3s; }
     .product-card:hover .product-icon-overlay { opacity: .25; }
     .product-badge-tag { position: absolute; top: 14px; left: 14px; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; }
@@ -119,12 +180,10 @@
     .product-type { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
     .product-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 1px; }
     .price-sold { color: var(--muted); text-decoration: line-through; }
-
     .empty-state { grid-column: 1/-1; text-align: center; padding: 100px 20px; display: none; }
     .empty-state.visible { display: block; }
     .empty-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 48px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
     .empty-sub { font-size: 13px; color: #333; letter-spacing: 1px; }
-
     .load-more-wrap { text-align: center; padding: 64px 0 20px; opacity: 0; animation: slideUp .6s .8s ease forwards; }
     .btn-load { display: inline-block; padding: 16px 52px; background: transparent; color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; border: 1px solid var(--border); border-radius: 999px; cursor: none; transition: all .3s; }
     .btn-load:hover { border-color: white; color: white; }
@@ -150,11 +209,126 @@
 
     @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes modalIn { from { opacity: 0; transform: scale(.96) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes modalMobileIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      #cursor, #cursor-ring { display: none; }
+      a, button { cursor: auto !important; }
+
+      nav { padding: 18px 22px; }
+      .nav-links { display: none; }
+      .nav-cart { display: none; }
+      .hamburger { display: flex; }
+
+      .page-header { padding: 110px 22px 48px; }
+      .page-header-icon { display: none; }
+      .page-header-meta { gap: 16px; margin-top: 16px; }
+
+      .shop-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+
+      .mobile-filter-bar { display: block; }
+
+      .grid-area { padding: 0 22px 60px; }
+      .grid-toolbar { margin-bottom: 24px; padding-bottom: 16px; }
+      .view-toggle { display: none; }
+
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .product-grid.two-col { grid-template-columns: repeat(2,1fr); }
+      .product-name { font-size: 14px; }
+      .product-price { font-size: 14px; }
+      /* always show add button on mobile */
+      .product-hover-add { transform: translateY(0); font-size: 11px; letter-spacing: 1px; padding: 11px 8px; }
+      .product-sizes { display: none; }
+      .tee-shape { transform: scale(.75); }
+      .hoodie-shape { transform: scale(.75); }
+      .cap-shape { transform: scale(.75); }
+      .pants-shape { transform: scale(.75); }
+
+      /* mobile quick view — bottom sheet */
+      .quick-view-overlay { align-items: flex-end; }
+      .quick-view-modal { grid-template-columns: 1fr; width: 100%; max-width: 100%; max-height: 88vh; border-radius: 16px 16px 0 0; border-left: none; border-right: none; border-bottom: none; animation: modalMobileIn .4s cubic-bezier(.23,1,.32,1) forwards; }
+      .qv-image { display: none; }
+      .qv-details { padding: 36px 28px 44px; max-height: 88vh; overflow-y: auto; }
+      .qv-name { font-size: 32px; }
+      .qv-close { top: 16px; right: 20px; }
+
+      .load-more-wrap { padding: 40px 0 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid { gap: 8px; }
+      .product-badge-tag { font-size: 8px; padding: 3px 8px; }
+    }
   </style>
 </head>
 <body>
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mm-bg"></div>
+    <div class="mm-header">
+      <img src="visnoblo.png" alt="VISION" class="mm-logo" />
+      <button class="mm-close" id="mm-close">✕</button>
+    </div>
+    <div class="mm-links">
+      <a href="shop.html" class="active">Shop</a>
+      <a href="drops.html">Drops</a>
+      <a href="lookbook.html">Lookbook</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="mm-bottom">
+      <button class="mm-cart-btn nav-cart">Cart (0)</button>
+      <p class="mm-tagline">See Different</p>
+    </div>
+  </div>
+
+  <!-- MOBILE FILTER PAGE -->
+  <div class="mobile-filter-page" id="mobile-filter-page">
+    <div class="mfp-header">
+      <div class="mfp-titles">
+        <p class="mfp-eyebrow">Refine</p>
+        <h2 class="mfp-title">Filters</h2>
+      </div>
+      <button class="mfp-close" id="mfp-close">✕</button>
+    </div>
+    <div class="mfp-body">
+      <div class="mfp-group">
+        <p class="mfp-group-label">Category</p>
+        <div class="mfp-options">
+          <button class="mfp-option-btn active" data-mfilter="all">All</button>
+          <button class="mfp-option-btn" data-mfilter="tee">T-Shirts</button>
+          <button class="mfp-option-btn" data-mfilter="hoodie">Hoodies</button>
+          <button class="mfp-option-btn" data-mfilter="crewneck">Crewnecks</button>
+          <button class="mfp-option-btn" data-mfilter="pants">Pants</button>
+          <button class="mfp-option-btn" data-mfilter="accessories">Accessories</button>
+        </div>
+      </div>
+      <div class="mfp-group">
+        <p class="mfp-group-label">Availability</p>
+        <div class="mfp-options">
+          <button class="mfp-option-btn" data-mfilter="in-stock">In Stock Only</button>
+        </div>
+      </div>
+      <div class="mfp-group">
+        <p class="mfp-group-label">Sort By</p>
+        <div class="mfp-options">
+          <button class="mfp-sort-btn active" data-msort="featured">Featured</button>
+          <button class="mfp-sort-btn" data-msort="price-asc">Price: Low → High</button>
+          <button class="mfp-sort-btn" data-msort="price-desc">Price: High → Low</button>
+          <button class="mfp-sort-btn" data-msort="newest">Newest First</button>
+        </div>
+      </div>
+    </div>
+    <div class="mfp-footer">
+      <button class="mfp-apply" id="mfp-apply">Show Results</button>
+      <button class="mfp-clear" id="mfp-clear">Clear All</button>
+    </div>
+  </div>
 
   <nav>
     <div class="nav-logo"><a href="index.html"><img src="visnoblo.png" alt="VISION" /></a></div>
@@ -165,6 +339,9 @@
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-cart">Cart (0)</div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <div class="page-header">
@@ -179,6 +356,13 @@
         <span class="meta-count">SS25 Season</span>
       </div>
     </div>
+  </div>
+
+  <!-- MOBILE FILTER TRIGGER -->
+  <div class="mobile-filter-bar">
+    <button class="mobile-filter-trigger" id="mobile-filter-trigger">
+      ⊟ Filters <span class="filter-count" id="filter-count-badge">0</span>
+    </button>
   </div>
 
   <div class="shop-layout">
@@ -232,12 +416,8 @@
             <div class="product-sizes"><div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div><div class="size-dot out">XL</div></div>
             <div class="product-hover-add" data-product="Core Tee — Black" data-price="$58" data-type="T-Shirt">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Core Tee — Black</div>
-            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$58</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Core Tee — Black</div><div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$58</span></div></div>
         </div>
-
         <div class="product-card p2" data-type="hoodie" data-price="128" data-order="2">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="hoodie-shape"></div></div>
@@ -246,12 +426,8 @@
             <div class="product-sizes"><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div><div class="size-dot">XL</div></div>
             <div class="product-hover-add" data-product="Spark Hoodie" data-price="$128" data-type="Hoodie">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Spark Hoodie</div>
-            <div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price">$128</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Spark Hoodie</div><div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price">$128</span></div></div>
         </div>
-
         <div class="product-card p3" data-type="tee" data-price="62" data-order="3">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="tee-shape"></div></div>
@@ -259,12 +435,8 @@
             <div class="product-sizes"><div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot out">L</div><div class="size-dot out">XL</div></div>
             <div class="product-hover-add" data-product="Halftone Tee" data-price="$62" data-type="T-Shirt">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Halftone Tee</div>
-            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$62</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Halftone Tee</div><div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$62</span></div></div>
         </div>
-
         <div class="product-card p4" data-type="crewneck" data-price="114" data-order="4">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="hoodie-shape"></div></div>
@@ -273,12 +445,8 @@
             <div class="product-sizes"><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot out">L</div><div class="size-dot out">XL</div></div>
             <div class="product-hover-add" data-product="Stellar Crewneck" data-price="$114" data-type="Crewneck">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Stellar Crewneck</div>
-            <div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$114</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Stellar Crewneck</div><div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$114</span></div></div>
         </div>
-
         <div class="product-card p5" data-type="tee" data-price="66" data-order="5">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="tee-shape"></div></div>
@@ -287,12 +455,8 @@
             <div class="product-sizes"><div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div><div class="size-dot">XL</div></div>
             <div class="product-hover-add" data-product="Ghost Tee — Slate" data-price="$66" data-type="T-Shirt">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Ghost Tee — Slate</div>
-            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$66</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Ghost Tee — Slate</div><div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$66</span></div></div>
         </div>
-
         <div class="product-card p6" data-type="pants" data-price="148" data-order="6">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="pants-shape"></div></div>
@@ -300,12 +464,8 @@
             <div class="product-sizes"><div class="size-dot">28</div><div class="size-dot">30</div><div class="size-dot">32</div><div class="size-dot out">34</div></div>
             <div class="product-hover-add" data-product="Void Cargo Pant" data-price="$148" data-type="Pants">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Void Cargo Pant</div>
-            <div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$148</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Void Cargo Pant</div><div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$148</span></div></div>
         </div>
-
         <div class="product-card p7 sold-out" data-type="hoodie" data-price="136" data-order="7" data-sold="true">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="hoodie-shape"></div></div>
@@ -313,12 +473,8 @@
             <div class="product-badge-tag badge-sold">Sold Out</div>
             <div class="product-hover-add">Sold Out</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Fracture Hoodie</div>
-            <div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price price-sold">$136</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Fracture Hoodie</div><div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price price-sold">$136</span></div></div>
         </div>
-
         <div class="product-card p8" data-type="accessories" data-price="44" data-order="8">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="cap-shape"></div></div>
@@ -327,12 +483,8 @@
             <div class="product-sizes"><div class="size-dot">OS</div></div>
             <div class="product-hover-add" data-product="Logo Cap — Black" data-price="$44" data-type="Accessories">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Logo Cap — Black</div>
-            <div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$44</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Logo Cap — Black</div><div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$44</span></div></div>
         </div>
-
         <div class="product-card p1" data-type="crewneck" data-price="108" data-order="9">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="hoodie-shape"></div></div>
@@ -340,12 +492,8 @@
             <div class="product-sizes"><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div><div class="size-dot">XL</div></div>
             <div class="product-hover-add" data-product="Outline Crewneck" data-price="$108" data-type="Crewneck">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Outline Crewneck</div>
-            <div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$108</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Outline Crewneck</div><div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$108</span></div></div>
         </div>
-
         <div class="product-card p3" data-type="tee" data-price="54" data-order="10">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="tee-shape"></div></div>
@@ -353,12 +501,8 @@
             <div class="product-sizes"><div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div><div class="size-dot">XL</div></div>
             <div class="product-hover-add" data-product="Signal Tee — Charcoal" data-price="$54" data-type="T-Shirt">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Signal Tee — Charcoal</div>
-            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$54</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Signal Tee — Charcoal</div><div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$54</span></div></div>
         </div>
-
         <div class="product-card p5" data-type="pants" data-price="158" data-order="11">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="pants-shape"></div></div>
@@ -367,12 +511,8 @@
             <div class="product-sizes"><div class="size-dot">28</div><div class="size-dot">30</div><div class="size-dot out">32</div><div class="size-dot out">34</div></div>
             <div class="product-hover-add" data-product="Eclipse Track Pant" data-price="$158" data-type="Pants">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Eclipse Track Pant</div>
-            <div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$158</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Eclipse Track Pant</div><div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$158</span></div></div>
         </div>
-
         <div class="product-card p6" data-type="accessories" data-price="38" data-order="12">
           <div class="product-thumb">
             <div class="thumb-inner"><div class="cap-shape"></div></div>
@@ -380,21 +520,14 @@
             <div class="product-sizes"><div class="size-dot">OS</div></div>
             <div class="product-hover-add" data-product="Vision Beanie" data-price="$38" data-type="Accessories">Quick View</div>
           </div>
-          <div class="product-info">
-            <div class="product-name">Vision Beanie</div>
-            <div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$38</span></div>
-          </div>
+          <div class="product-info"><div class="product-name">Vision Beanie</div><div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$38</span></div></div>
         </div>
-
         <div class="empty-state" id="empty-state">
           <p class="empty-title">No Results</p>
           <p class="empty-sub">Try a different filter</p>
         </div>
       </div>
-
-      <div class="load-more-wrap">
-        <button class="btn-load">Load More</button>
-      </div>
+      <div class="load-more-wrap"><button class="btn-load">Load More</button></div>
     </div>
   </div>
 
@@ -435,8 +568,11 @@
     const cards = document.querySelectorAll('.product-card:not(.empty-state)');
     cards.forEach((c, i) => { c.style.animationDelay = `${0.5 + i * 0.06}s`; c.classList.add('visible'); });
 
+    // ── Filters ──────────────────────────────
     let activeFilter = 'all';
     let stockOnly = false;
+    let currentSort = 'featured';
+
     const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -446,6 +582,7 @@
         applyFilters();
       });
     });
+
     function applyFilters() {
       const allCards = document.querySelectorAll('.product-card[data-type]');
       let visible = 0;
@@ -453,12 +590,21 @@
       document.getElementById('product-count').textContent = `${visible} Item${visible !== 1 ? 's' : ''}`;
       document.getElementById('empty-state').classList.toggle('visible', visible === 0);
       updateFilterTags();
+      updateFilterBadge();
     }
+
     function updateFilterTags() {
       const container = document.getElementById('active-filters'); container.innerHTML = '';
       if (activeFilter !== 'all') { const tag = document.createElement('div'); tag.className = 'active-filter-tag'; tag.innerHTML = `${activeFilter} <button class="tag-remove" onclick="clearFilter('type')">✕</button>`; container.appendChild(tag); }
       if (stockOnly) { const tag = document.createElement('div'); tag.className = 'active-filter-tag'; tag.innerHTML = `In Stock <button class="tag-remove" onclick="clearFilter('stock')">✕</button>`; container.appendChild(tag); }
     }
+
+    function updateFilterBadge() {
+      const count = (activeFilter !== 'all' ? 1 : 0) + (stockOnly ? 1 : 0);
+      const badge = document.getElementById('filter-count-badge');
+      if (badge) { badge.textContent = count; badge.classList.toggle('show', count > 0); }
+    }
+
     window.clearFilter = function(type) {
       if (type === 'type') { activeFilter = 'all'; filterBtns.forEach(b => { if (b.dataset.filter !== 'in-stock') b.classList.remove('active'); }); document.querySelector('[data-filter="all"]').classList.add('active'); }
       else { stockOnly = false; document.querySelector('[data-filter="in-stock"]').classList.remove('active'); }
@@ -466,15 +612,26 @@
     };
 
     document.getElementById('sort-select').addEventListener('change', function() {
+      currentSort = this.value;
+      sortGrid();
+    });
+
+    function sortGrid() {
       const grid = document.getElementById('product-grid');
       const items = [...grid.querySelectorAll('.product-card[data-type]')];
-      items.sort((a, b) => { if (this.value === 'price-asc') return +a.dataset.price - +b.dataset.price; if (this.value === 'price-desc') return +b.dataset.price - +a.dataset.price; if (this.value === 'newest') return +b.dataset.order - +a.dataset.order; return +a.dataset.order - +b.dataset.order; });
+      items.sort((a, b) => {
+        if (currentSort === 'price-asc') return +a.dataset.price - +b.dataset.price;
+        if (currentSort === 'price-desc') return +b.dataset.price - +a.dataset.price;
+        if (currentSort === 'newest') return +b.dataset.order - +a.dataset.order;
+        return +a.dataset.order - +b.dataset.order;
+      });
       items.forEach(el => grid.insertBefore(el, grid.querySelector('.empty-state')));
-    });
+    }
 
     document.getElementById('view-3').addEventListener('click', function() { document.getElementById('product-grid').classList.remove('two-col'); this.classList.add('active'); document.getElementById('view-2').classList.remove('active'); });
     document.getElementById('view-2').addEventListener('click', function() { document.getElementById('product-grid').classList.add('two-col'); this.classList.add('active'); document.getElementById('view-3').classList.remove('active'); });
 
+    // ── Quick View ───────────────────────────
     const overlay = document.getElementById('qv-overlay');
     document.querySelectorAll('.product-hover-add[data-product]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -486,10 +643,66 @@
     });
     document.getElementById('qv-close').addEventListener('click', () => overlay.classList.remove('open'));
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-
     document.querySelectorAll('.size-pill').forEach(pill => {
       pill.addEventListener('click', function() { document.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected')); this.classList.add('selected'); });
     });
+
+    // ── Mobile Menu ──────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mmClose = document.getElementById('mm-close');
+    function openMenu() { hamburger.classList.add('open'); mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }
+    hamburger?.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+    mmClose?.addEventListener('click', closeMenu);
+
+    // ── Mobile Filter Page ───────────────────
+    const mfPage = document.getElementById('mobile-filter-page');
+    const mfTrigger = document.getElementById('mobile-filter-trigger');
+    const mfClose = document.getElementById('mfp-close');
+    const mfApply = document.getElementById('mfp-apply');
+    const mfClear = document.getElementById('mfp-clear');
+
+    function openFilterPage() { mfPage.classList.add('open'); document.body.style.overflow = 'hidden'; syncMobileFilters(); }
+    function closeFilterPage() { mfPage.classList.remove('open'); document.body.style.overflow = ''; }
+
+    mfTrigger?.addEventListener('click', openFilterPage);
+    mfClose?.addEventListener('click', closeFilterPage);
+
+    mfApply?.addEventListener('click', () => { closeFilterPage(); applyFilters(); if (currentSort !== 'featured') sortGrid(); });
+    mfClear?.addEventListener('click', () => {
+      activeFilter = 'all'; stockOnly = false; currentSort = 'featured';
+      document.querySelectorAll('.mfp-option-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.mfp-option-btn[data-mfilter="all"]').classList.add('active');
+      document.querySelectorAll('.mfp-sort-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.mfp-sort-btn[data-msort="featured"]').classList.add('active');
+    });
+
+    document.querySelectorAll('.mfp-option-btn[data-mfilter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.mfilter;
+        if (f === 'in-stock') { stockOnly = !stockOnly; btn.classList.toggle('active', stockOnly); }
+        else {
+          document.querySelectorAll('.mfp-option-btn[data-mfilter]:not([data-mfilter="in-stock"])').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); activeFilter = f;
+        }
+      });
+    });
+
+    document.querySelectorAll('.mfp-sort-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mfp-sort-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active'); currentSort = btn.dataset.msort;
+      });
+    });
+
+    function syncMobileFilters() {
+      document.querySelectorAll('.mfp-option-btn[data-mfilter]').forEach(btn => {
+        const f = btn.dataset.mfilter;
+        btn.classList.toggle('active', f === 'in-stock' ? stockOnly : f === activeFilter);
+      });
+      document.querySelectorAll('.mfp-sort-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.msort === currentSort));
+    }
   </script>
   <script src="cart.js"></script>
 </body>
