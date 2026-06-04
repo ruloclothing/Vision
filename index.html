@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>if(location.pathname.endsWith('/index.html'))location.replace('/');</script>
   <title>VISION — See Different</title>
-  <link rel="icon" type="image/png" href="blackvisnobic.png">
+  <link rel="icon" type="image/png" href="/blackvisnobic.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,700;1,300;1,700;1,800;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -51,7 +52,7 @@
       overflow: hidden;
     }
     .mobile-menu.open { transform: translateX(0); }
-    .mm-bg { position: absolute; width: 320px; height: 320px; bottom: -60px; right: -60px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .025; pointer-events: none; }
+    .mm-bg { position: absolute; width: 320px; height: 320px; bottom: -60px; right: -60px; background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .025; pointer-events: none; }
     .mm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; position: relative; }
     .mm-logo { height: 22px; }
     .mm-close { background: none; border: none; color: #444; font-size: 20px; cursor: none; padding: 4px; transition: color .2s; line-height: 1; }
@@ -72,7 +73,7 @@
 
     .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 160px 52px 120px; text-align: center; }
     .hero-radial { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 55% 45%, #191919 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 20% 80%, #111 0%, transparent 60%); }
-    .hero-icon-bg { position: absolute; width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.03; animation: slowSpin 80s linear infinite; }
+    .hero-icon-bg { position: absolute; width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.03; animation: slowSpin 80s linear infinite; }
     .hero-content { position: relative; z-index: 2; }
     .hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; opacity: 0; animation: slideUp .7s .1s ease forwards; }
     .hero-logo-img { width: 300px; margin-bottom: 56px; opacity: 0; animation: slideUp .7s .2s ease forwards; filter: drop-shadow(0 0 40px rgba(255,255,255,0.1)); }
@@ -90,7 +91,7 @@
     .marquee-inner:hover { animation-play-state: paused; }
     .marquee-chunk { display: flex; align-items: center; }
     .mq-item { display: flex; align-items: center; gap: 28px; padding: 0 40px; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-    .mq-star { width: 18px; height: 18px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: .35; flex-shrink: 0; }
+    .mq-star { width: 18px; height: 18px; background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: .35; flex-shrink: 0; }
 
     .section-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
     .section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(44px,6vw,76px); text-transform: uppercase; line-height: .95; }
@@ -114,7 +115,7 @@
     .hoodie-shape { width: 84px; height: 96px; position: relative; }
     .hoodie-shape::before { content: ''; position: absolute; bottom: 0; left: 8px; width: 68px; height: 76px; background: rgba(255,255,255,.07); border-radius: 3px 3px 8px 8px; }
     .hoodie-shape::after { content: ''; position: absolute; top: 0; left: 0; width: 84px; height: 36px; background: rgba(255,255,255,.07); clip-path: polygon(18px 0,66px 0,84px 20px,84px 36px,66px 36px,66px 20px,18px 20px,18px 36px,0 36px,0 20px); }
-    .product-icon-overlay { position: absolute; bottom: 18px; right: 16px; width: 44px; height: 44px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .12; transition: opacity .3s; }
+    .product-icon-overlay { position: absolute; bottom: 18px; right: 16px; width: 44px; height: 44px; background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .12; transition: opacity .3s; }
     .product-card:hover .product-icon-overlay { opacity: .28; }
     .product-badge-tag { position: absolute; top: 14px; left: 14px; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; }
     .product-hover-add { position: absolute; bottom: 0; left: 0; right: 0; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; text-align: center; padding: 14px; transform: translateY(100%); transition: transform .3s cubic-bezier(.23,1,.32,1); cursor: none; }
@@ -125,14 +126,14 @@
     .product-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 1px; }
 
     .statement-section { padding: 140px 52px; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-    .statement-icon-bg { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .04; }
+    .statement-icon-bg { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .04; }
     .statement-content { position: relative; z-index: 1; max-width: 720px; }
     .statement-headline { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(52px,7vw,96px); text-transform: uppercase; line-height: .95; margin-bottom: 36px; }
     .statement-headline .stroke { -webkit-text-stroke: 1.5px white; color: transparent; }
     .statement-body { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--muted2); max-width: 460px; margin-bottom: 48px; }
 
     .banner-section { padding: 100px 52px; background: #fff; color: #000; display: flex; align-items: center; justify-content: space-between; gap: 40px; position: relative; overflow: hidden; }
-    .banner-icon-bg { position: absolute; left: -80px; top: 50%; transform: translateY(-50%); width: 480px; height: 480px; background-image: url('blackvisnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .06; }
+    .banner-icon-bg { position: absolute; left: -80px; top: 50%; transform: translateY(-50%); width: 480px; height: 480px; background-image: url('/blackvisnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .06; }
     .banner-text { position: relative; z-index: 1; }
     .banner-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #888; margin-bottom: 10px; }
     .banner-headline { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(48px,6vw,80px); text-transform: uppercase; line-height: .95; color: #000; }
@@ -143,7 +144,7 @@
 
     footer { background: #040404; padding: 88px 52px 52px; border-top: 1px solid var(--border); }
     .footer-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; padding-bottom: 72px; border-bottom: 1px solid var(--border); }
-    .footer-brand-icon { width: 56px; height: 56px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; margin-bottom: 20px; opacity: .9; }
+    .footer-brand-icon { width: 56px; height: 56px; background-image: url('/visnobic.png'); background-size: contain; background-repeat: no-repeat; margin-bottom: 20px; opacity: .9; }
     .footer-brand-blurb { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 240px; }
     .footer-col-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
     .footer-links-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
@@ -228,14 +229,14 @@
   <div class="mobile-menu" id="mobile-menu">
     <div class="mm-bg"></div>
     <div class="mm-header">
-      <img src="visnoblo.png" alt="VISION" class="mm-logo" />
+      <img src="/visnoblo.png" alt="VISION" class="mm-logo" />
       <button class="mm-close" id="mm-close">✕</button>
     </div>
     <div class="mm-links">
-      <a href="shop.html">Shop</a>
-      <a href="drops.html">Drops</a>
-      <a href="lookbook.html">Lookbook</a>
-      <a href="about.html">About</a>
+      <a href="/shop/">Shop</a>
+      <a href="/drops/">Drops</a>
+      <a href="/lookbook/">Lookbook</a>
+      <a href="/about/">About</a>
     </div>
     <div class="mm-bottom">
       <button class="mm-cart-btn nav-cart">Cart (0)</button>
@@ -244,12 +245,12 @@
   </div>
 
   <nav>
-    <div class="nav-logo"><a href="index.html"><img src="visnoblo.png" alt="VISION" /></a></div>
+    <div class="nav-logo"><a href="/"><img src="/visnoblo.png" alt="VISION" /></a></div>
     <ul class="nav-links">
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="drops.html">Drops</a></li>
-      <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="/shop/">Shop</a></li>
+      <li><a href="/drops/">Drops</a></li>
+      <li><a href="/lookbook/">Lookbook</a></li>
+      <li><a href="/about/">About</a></li>
     </ul>
     <div class="nav-cart">Cart (0)</div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -262,11 +263,11 @@
     <div class="hero-icon-bg"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Seeing Beyond The Ordinary</p>
-      <img class="hero-logo-img" src="visnoblo.png" alt="VISION" />
+      <img class="hero-logo-img" src="/visnoblo.png" alt="VISION" />
       <h1 class="hero-headline">See<br /><span class="stroke">Different</span></h1>
       <p class="hero-sub">Streetwear built for those who look closer</p>
       <div class="hero-actions">
-        <a href="shop.html" class="btn-primary">Shop Now</a>
+        <a href="/shop/" class="btn-primary">Shop Now</a>
         <a href="#about" class="btn-ghost">Our Story</a>
       </div>
     </div>
@@ -311,7 +312,7 @@
         <p class="section-label">Just Dropped</p>
         <h2 class="section-title">New Arrivals</h2>
       </div>
-      <a href="shop.html" class="section-link">View All Products</a>
+      <a href="/shop/" class="section-link">View All Products</a>
     </div>
     <div class="product-grid">
       <div class="product-card p1">
@@ -362,7 +363,7 @@
       <p class="section-label">About Vision</p>
       <h2 class="statement-headline">Built For<br /><span class="stroke">The Ones</span><br />Who Notice</h2>
       <p class="statement-body">VISION is a streetwear brand built around clarity — the clarity of knowing what you stand for and wearing it without apology. Every piece is made for people who see the world differently and aren't afraid to show it.</p>
-      <a href="about.html" class="btn-primary" style="font-size:15px; padding: 15px 44px;">Our Story</a>
+      <a href="/about/" class="btn-primary" style="font-size:15px; padding: 15px 44px;">Our Story</a>
     </div>
   </section>
 
@@ -372,7 +373,7 @@
       <p class="banner-label">New Season</p>
       <h2 class="banner-headline">The SS25<br /><span class="stroke-dark">Drop Is Live</span></h2>
     </div>
-    <div class="banner-cta"><a href="shop.html" class="btn-dark">Shop the Drop</a></div>
+    <div class="banner-cta"><a href="/shop/" class="btn-dark">Shop the Drop</a></div>
   </section>
 
   <footer>
@@ -384,11 +385,11 @@
       <div>
         <p class="footer-col-label">Navigate</p>
         <ul class="footer-links-list">
-          <li><a href="shop.html">Shop</a></li>
-          <li><a href="shop.html">New Arrivals</a></li>
-          <li><a href="lookbook.html">Lookbook</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="/shop/">Shop</a></li>
+          <li><a href="/shop/">New Arrivals</a></li>
+          <li><a href="/lookbook/">Lookbook</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
         </ul>
       </div>
       <div>
@@ -402,7 +403,7 @@
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2025 VISION. All rights reserved.</p>
-      <img class="footer-logo-bottom" src="visnoblo.png" alt="VISION" />
+      <img class="footer-logo-bottom" src="/visnoblo.png" alt="VISION" />
       <div class="footer-bottom-links">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -443,6 +444,6 @@
     hamburger?.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
     mmClose?.addEventListener('click', closeMenu);
   </script>
-  <script src="cart.js"></script>
+  <script src="/cart.js"></script>
 </body>
 </html>
