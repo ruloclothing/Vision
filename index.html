@@ -27,6 +27,7 @@
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 28px 52px; display: flex; align-items: center; justify-content: space-between; }
     nav::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(8,8,8,.95) 0%, transparent 100%); pointer-events: none; }
+    .nav-logo a { display: inline-block; }
     .nav-logo img { height: 28px; position: relative; }
     .nav-links { display: flex; gap: 44px; list-style: none; position: relative; }
     .nav-links a { color: var(--muted2); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; transition: color .2s; }
@@ -142,12 +143,12 @@
   <div id="cursor-ring"></div>
 
   <nav>
-    <div class="nav-logo"><img src="visnoblo.png" alt="VISION" /></div>
+    <div class="nav-logo"><a href="index.html"><img src="visnoblo.png" alt="VISION" /></a></div>
     <ul class="nav-links">
-      <li><a href="#">Shop</a></li>
-      <li><a href="#">Drops</a></li>
-      <li><a href="#">Lookbook</a></li>
-      <li><a href="#">About</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="drops.html">Drops</a></li>
+      <li><a href="lookbook.html">Lookbook</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-cart">Cart (0)</div>
   </nav>
@@ -161,7 +162,7 @@
       <h1 class="hero-headline">See<br /><span class="stroke">Different</span></h1>
       <p class="hero-sub">Streetwear built for those who look closer</p>
       <div class="hero-actions">
-        <a href="#shop" class="btn-primary">Shop Now</a>
+        <a href="shop.html" class="btn-primary">Shop Now</a>
         <a href="#about" class="btn-ghost">Our Story</a>
       </div>
     </div>
@@ -210,7 +211,7 @@
         <p class="section-label">Just Dropped</p>
         <h2 class="section-title">New Arrivals</h2>
       </div>
-      <a href="#" class="section-link">View All Products</a>
+      <a href="shop.html" class="section-link">View All Products</a>
     </div>
     <div class="product-grid">
       <div class="product-card p1">
@@ -261,7 +262,7 @@
       <p class="section-label">About Vision</p>
       <h2 class="statement-headline">Built For<br /><span class="stroke">The Ones</span><br />Who Notice</h2>
       <p class="statement-body">VISION is a streetwear brand built around clarity — the clarity of knowing what you stand for and wearing it without apology. Every piece is made for people who see the world differently and aren't afraid to show it.</p>
-      <a href="#" class="btn-primary" style="font-size:15px; padding: 15px 44px;">Our Story</a>
+      <a href="about.html" class="btn-primary" style="font-size:15px; padding: 15px 44px;">Our Story</a>
     </div>
   </section>
 
@@ -271,7 +272,7 @@
       <p class="banner-label">New Season</p>
       <h2 class="banner-headline">The SS25<br /><span class="stroke-dark">Drop Is Live</span></h2>
     </div>
-    <div class="banner-cta"><a href="#" class="btn-dark">Shop the Drop</a></div>
+    <div class="banner-cta"><a href="shop.html" class="btn-dark">Shop the Drop</a></div>
   </section>
 
   <footer>
@@ -283,11 +284,11 @@
       <div>
         <p class="footer-col-label">Navigate</p>
         <ul class="footer-links-list">
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">New Arrivals</a></li>
-          <li><a href="#">Lookbook</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="shop.html">New Arrivals</a></li>
+          <li><a href="lookbook.html">Lookbook</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
       <div>
