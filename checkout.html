@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,700;1,300;1,700;1,800;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://js.stripe.com/v3/"></script>
   <style>
     :root {
       --bg: #080808; --surface: #101010; --surface2: #161616;
@@ -28,7 +29,6 @@
     body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 18px; height: 18px; }
     body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 60px; height: 60px; opacity: 0; }
 
-    /* ── NAV ─────────────────────────────────── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       padding: 24px 52px; display: flex; align-items: center; justify-content: space-between;
@@ -54,13 +54,11 @@
       animation: securePulse 2.5s ease-in-out infinite;
     }
 
-    /* ── LAYOUT ──────────────────────────────── */
     .checkout-wrapper {
       padding-top: 85px; min-height: 100vh;
       display: grid; grid-template-columns: 1fr 420px;
     }
 
-    /* ── FORM SIDE ───────────────────────────── */
     .form-side { padding: 72px 68px 100px; border-right: 1px solid var(--border); }
 
     .checkout-header { margin-bottom: 60px; }
@@ -76,7 +74,6 @@
     }
     .checkout-title .stroke { -webkit-text-stroke: 2px white; color: transparent; }
 
-    /* form sections */
     .form-section { margin-bottom: 52px; opacity: 0; }
     .form-section.s1 { animation: slideUp .6s .32s ease forwards; }
     .form-section.s2 { animation: slideUp .6s .42s ease forwards; }
@@ -90,7 +87,6 @@
     }
     .section-heading .num { color: #272727; }
 
-    /* fields */
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .field-row.single { grid-template-columns: 1fr; }
     .field-row.three { grid-template-columns: 2fr 1fr 1fr; }
@@ -116,18 +112,19 @@
     }
     .field select option { background: #111; }
 
-    /* card number wrapper */
-    .card-wrap { position: relative; }
-    .card-wrap input { padding-right: 52px; letter-spacing: 2px; font-size: 15px; }
-    .card-network {
-      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      font-size: 11px; letter-spacing: 2px; font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; font-style: italic; text-transform: uppercase; color: #2a2a2a;
-      transition: color .3s;
+    /* Stripe Element container */
+    .stripe-field {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 14px 16px; border-radius: 6px; transition: border-color .2s;
     }
-    .card-network.active { color: var(--muted2); }
+    .stripe-field.StripeElement--focus { border-color: #2e2e2e; }
+    .stripe-field.StripeElement--invalid { border-color: #6a2020; }
 
-    /* place order */
+    .stripe-error {
+      font-size: 12px; color: #c0392b; margin-top: 8px; letter-spacing: .5px;
+      min-height: 18px;
+    }
+
     .place-order-wrap { opacity: 0; animation: slideUp .6s .64s ease forwards; }
     .btn-place-order {
       display: block; width: 100%; padding: 20px; background: white; color: black;
@@ -135,14 +132,13 @@
       font-size: 16px; letter-spacing: 4px; text-transform: uppercase; border: 2px solid white;
       border-radius: 999px; cursor: none; transition: all .35s; text-align: center;
     }
-    .btn-place-order:hover { background: transparent; color: white; }
-    .btn-place-order:disabled { opacity: .35; pointer-events: none; }
+    .btn-place-order:hover:not(:disabled) { background: transparent; color: white; }
+    .btn-place-order:disabled { opacity: .45; pointer-events: none; }
     .order-disclaimer {
       font-size: 11px; color: #252525; text-align: center;
       margin-top: 16px; line-height: 1.7; letter-spacing: .5px;
     }
 
-    /* ── SUMMARY SIDE ────────────────────────── */
     .summary-side {
       background: var(--surface); padding: 72px 44px 60px;
       position: sticky; top: 85px; height: calc(100vh - 85px);
@@ -179,7 +175,6 @@
       width: 17px; height: 17px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
-    /* mini garment shapes */
     .si-tee { width: 22px; height: 26px; position: relative; }
     .si-tee::before { content:''; position:absolute; bottom:0; left:3px; width:16px; height:20px; background:rgba(255,255,255,.1); border-radius:2px 2px 3px 3px; }
     .si-tee::after { content:''; position:absolute; top:0; left:0; width:22px; height:8px; background:rgba(255,255,255,.1); clip-path:polygon(5px 0,17px 0,20px 4px,22px 4px,22px 8px,17px 8px,17px 4px,5px 4px,5px 8px,0 8px,0 4px,2px 4px); }
@@ -197,7 +192,6 @@
     .si-meta { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
     .si-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; flex-shrink: 0; }
 
-    /* promo */
     .promo-row { display: flex; gap: 10px; margin-bottom: 24px; opacity: 0; animation: slideUp .6s .46s ease forwards; }
     .promo-input {
       flex: 1; background: #0c0c0c; border: 1px solid var(--border); color: white;
@@ -214,7 +208,6 @@
     }
     .promo-btn:hover { border-color: white; color: white; }
 
-    /* totals */
     .summary-totals { opacity: 0; animation: slideUp .6s .52s ease forwards; }
     .total-row {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -231,7 +224,6 @@
     .total-row.grand .total-value { font-size: 30px; font-weight: 900; color: white; }
     .shipping-free { color: #3a9a5a !important; }
 
-    /* ── EMPTY CART STATE ────────────────────── */
     .empty-checkout {
       display: flex; flex-direction: column; align-items: center;
       justify-content: center; min-height: 60vh; text-align: center; padding: 60px 40px;
@@ -249,7 +241,6 @@
     }
     .btn-go-shop:hover { background: transparent; color: white; }
 
-    /* ── SUCCESS OVERLAY ─────────────────────── */
     .success-overlay {
       position: fixed; inset: 0; background: #040404; z-index: 8000;
       display: none; flex-direction: column; align-items: center;
@@ -291,22 +282,17 @@
       letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 28px;
     }
     .success-info-bar {
-      display: flex; gap: 0; background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; overflow: hidden; margin-bottom: 36px; display: inline-flex;
+      display: inline-flex; gap: 0; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; margin-bottom: 36px;
     }
-    .sib-item {
-      padding: 18px 32px; text-align: center;
-      border-right: 1px solid var(--border);
-    }
+    .sib-item { padding: 18px 32px; text-align: center; border-right: 1px solid var(--border); }
     .sib-item:last-child { border-right: none; }
     .sib-label {
       font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic;
-      font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
-      margin-bottom: 6px;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
     }
     .sib-value {
-      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic;
-      font-size: 22px;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 22px;
     }
     .success-sub {
       font-size: 14px; font-weight: 300; color: var(--muted2); line-height: 1.75;
@@ -346,8 +332,6 @@
   </nav>
 
   <div class="checkout-wrapper">
-
-    <!-- ── FORM ── -->
     <div class="form-side" id="form-side">
       <div class="checkout-header">
         <p class="checkout-eyebrow">SS25 Collection</p>
@@ -422,26 +406,23 @@
         </div>
       </div>
 
-      <!-- 03 PAYMENT -->
+      <!-- 03 PAYMENT — Stripe Elements -->
       <div class="form-section s3">
         <div class="section-heading"><span class="num">03</span> Payment</div>
         <div class="field-row single">
           <div class="field">
             <label>Card Number</label>
-            <div class="card-wrap">
-              <input type="text" id="f-card" placeholder="1234  5678  9012  3456" maxlength="19" inputmode="numeric" autocomplete="cc-number" />
-              <span class="card-network" id="card-network">CARD</span>
-            </div>
+            <div id="stripe-card-number" class="stripe-field"></div>
           </div>
         </div>
         <div class="field-row">
           <div class="field">
             <label>Expiry Date</label>
-            <input type="text" id="f-expiry" placeholder="MM / YY" maxlength="7" inputmode="numeric" autocomplete="cc-exp" />
+            <div id="stripe-card-expiry" class="stripe-field"></div>
           </div>
           <div class="field">
             <label>CVC / CVV</label>
-            <input type="text" id="f-cvc" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc" />
+            <div id="stripe-card-cvc" class="stripe-field"></div>
           </div>
         </div>
         <div class="field-row single">
@@ -450,15 +431,16 @@
             <input type="text" id="f-cardname" placeholder="Full Name" autocomplete="cc-name" />
           </div>
         </div>
+        <div class="stripe-error" id="stripe-error"></div>
       </div>
 
       <div class="place-order-wrap">
         <button class="btn-place-order" id="place-order-btn">Place Order</button>
-        <p class="order-disclaimer">By placing your order you agree to VISION's Terms of Service and Privacy Policy.<br/>All transactions are secured and encrypted.</p>
+        <p class="order-disclaimer">By placing your order you agree to VISION's Terms of Service and Privacy Policy.<br/>All transactions are secured and encrypted via Stripe.</p>
       </div>
     </div>
 
-    <!-- ── SUMMARY ── -->
+    <!-- SUMMARY -->
     <div class="summary-side">
       <p class="summary-eyebrow">Your Order</p>
       <h2 class="summary-title">Summary</h2>
@@ -469,10 +451,9 @@
       </div>
       <div class="summary-totals" id="summary-totals"></div>
     </div>
-
   </div>
 
-  <!-- ── SUCCESS ── -->
+  <!-- SUCCESS -->
   <div class="success-overlay" id="success-overlay">
     <div class="success-bg-icon"></div>
     <div class="success-inner">
@@ -490,14 +471,49 @@
   </div>
 
   <script>
-    // ── Cursor ──────────────────────────────────────
+    // Cursor
     const cursor = document.getElementById('cursor');
     const ring   = document.getElementById('cursor-ring');
     let rx=0,ry=0,mx=0,my=0;
     document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
     (function animateRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animateRing); })();
 
-    // ── Cart helpers ────────────────────────────────
+    // ── Stripe setup ───────────────────────────────
+    const PUBLISHABLE_KEY = 'pk_live_51TeeYlIlrqQG2RRTAX8mDyCouoUfonmYJZBN8XdBKtg4VagH0VYfqjJ0fomUOuwIuO5G2MjmYObzRi3OV8osvqyA00G2OQcSBA';
+    const SERVER_URL      = 'https://v1siontheory.onrender.com';
+
+    const stripe   = Stripe(PUBLISHABLE_KEY);
+    const elements = stripe.elements({
+      appearance: {
+        theme: 'night',
+        variables: {
+          colorBackground: '#101010',
+          colorText: '#ffffff',
+          colorTextPlaceholder: '#252525',
+          colorIconTab: '#555555',
+          borderRadius: '6px',
+          fontFamily: 'Barlow, sans-serif',
+        },
+        rules: {
+          '.Input': { border: '1px solid #1c1c1c', padding: '14px 16px', fontSize: '14px' },
+          '.Input:focus': { border: '1px solid #2e2e2e', outline: 'none' },
+        }
+      }
+    });
+
+    const cardNumber  = elements.create('cardNumber');
+    const cardExpiry  = elements.create('cardExpiry');
+    const cardCvc     = elements.create('cardCvc');
+
+    cardNumber.mount('#stripe-card-number');
+    cardExpiry.mount('#stripe-card-expiry');
+    cardCvc.mount('#stripe-card-cvc');
+
+    cardNumber.on('change', e => {
+      document.getElementById('stripe-error').textContent = e.error ? e.error.message : '';
+    });
+
+    // ── Cart helpers ───────────────────────────────
     function getCart(){ try{ return JSON.parse(localStorage.getItem('vision_cart')||'[]'); }catch{ return []; } }
     function clearCart(){ localStorage.removeItem('vision_cart'); }
 
@@ -507,12 +523,11 @@
       return 'si-generic';
     }
 
-    // ── Render summary ──────────────────────────────
     let checkoutTotal = 0;
     let checkoutQty   = 0;
 
     function renderSummary(){
-      const cart = getCart();
+      const cart     = getCart();
       const itemsEl  = document.getElementById('summary-items');
       const totalsEl = document.getElementById('summary-totals');
 
@@ -540,7 +555,7 @@
           <div class="si-price">$${(item.price*item.qty).toFixed(2)}</div>
         </div>`).join('');
 
-      const subtotal = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+      const subtotal  = cart.reduce((s,i)=>s+i.price*i.qty, 0);
       const shipping  = subtotal >= 150 ? 0 : 14.99;
       checkoutTotal   = subtotal + shipping;
       checkoutQty     = cart.reduce((s,i)=>s+i.qty, 0);
@@ -568,31 +583,7 @@
     }
     renderSummary();
 
-    // ── Card number formatting ──────────────────────
-    document.getElementById('f-card')?.addEventListener('input', function(){
-      let v = this.value.replace(/\D/g,'').substring(0,16);
-      this.value = v.replace(/(.{4})/g,'$1 ').trim();
-      const net = document.getElementById('card-network');
-      const first = v[0];
-      if(first==='4'){ net.textContent='VISA'; net.classList.add('active'); }
-      else if(first==='5'){ net.textContent='MC'; net.classList.add('active'); }
-      else if(first==='3'){ net.textContent='AMEX'; net.classList.add('active'); }
-      else { net.textContent='CARD'; net.classList.remove('active'); }
-    });
-
-    // ── Expiry formatting ───────────────────────────
-    document.getElementById('f-expiry')?.addEventListener('input', function(){
-      let v = this.value.replace(/\D/g,'').substring(0,4);
-      if(v.length >= 2) v = v.substring(0,2)+' / '+v.substring(2);
-      this.value = v;
-    });
-
-    // ── CVC numbers only ────────────────────────────
-    document.getElementById('f-cvc')?.addEventListener('input', function(){
-      this.value = this.value.replace(/\D/g,'');
-    });
-
-    // ── Promo code ──────────────────────────────────
+    // ── Promo code ─────────────────────────────────
     document.getElementById('promo-btn')?.addEventListener('click', function(){
       const val = document.getElementById('promo-input').value.trim().toUpperCase();
       const inp = document.getElementById('promo-input');
@@ -601,43 +592,88 @@
         this.style.cssText='border-color:#3a9a5a;color:#3a9a5a';
       } else if(val){
         inp.style.borderColor='#8a2020'; this.textContent='Invalid';
-        setTimeout(()=>{ this.textContent='Apply'; inp.style.borderColor=''; this.style.cssText=''; }, 1800);
+        setTimeout(()=>{ this.textContent='Apply'; inp.style.borderColor=''; this.style.cssText=''; },1800);
       }
     });
 
-    // ── Validation ──────────────────────────────────
+    // ── Validation ─────────────────────────────────
     function validate(){
-      const required = ['f-email','f-first','f-last','f-address','f-city','f-province','f-postal','f-card','f-expiry','f-cvc','f-cardname'];
+      const required = ['f-email','f-first','f-last','f-address','f-city','f-province','f-postal','f-cardname'];
       let ok = true;
       required.forEach(id=>{
         const el = document.getElementById(id);
-        if(!el||!el.value.trim()){ if(el){ el.classList.add('error'); el.addEventListener('input',()=>el.classList.remove('error'),{once:true}); } ok=false; }
+        if(el && !el.value.trim()){ el.classList.add('error'); el.addEventListener('input',()=>el.classList.remove('error'),{once:true}); ok=false; }
       });
       const sel = document.getElementById('f-country');
-      if(sel&&!sel.value) ok=false;
+      if(sel && !sel.value) ok=false;
       return ok;
     }
 
-    // ── Place Order ─────────────────────────────────
-    document.getElementById('place-order-btn')?.addEventListener('click', function(){
+    // ── Place Order ────────────────────────────────
+    document.getElementById('place-order-btn')?.addEventListener('click', async function(){
       if(!validate()){
         const first = document.querySelector('input.error');
         if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
         return;
       }
-      this.textContent = 'Processing...';
-      this.disabled = true;
 
-      setTimeout(()=>{
-        const orderNum = 'VIS-'+Math.floor(100000+Math.random()*900000);
-        document.getElementById('success-order-num').textContent = 'Order #'+orderNum;
-        document.getElementById('success-info-bar').innerHTML = `
-          <div class="sib-item"><div class="sib-label">Items</div><div class="sib-value">${checkoutQty}</div></div>
-          <div class="sib-item"><div class="sib-label">Total</div><div class="sib-value">$${checkoutTotal.toFixed(2)}</div></div>
-          <div class="sib-item"><div class="sib-label">Ships In</div><div class="sib-value">3–5 Days</div></div>`;
-        clearCart();
-        document.getElementById('success-overlay').classList.add('show');
-      }, 1500);
+      const btn = this;
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+      document.getElementById('stripe-error').textContent = '';
+
+      try {
+        // 1. Create PaymentIntent on your Render server
+        const res = await fetch(`${SERVER_URL}/create-payment-intent`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: checkoutTotal })
+        });
+        const { clientSecret, error: serverError } = await res.json();
+
+        if(serverError) throw new Error(serverError);
+
+        // 2. Confirm card payment with Stripe
+        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: cardNumber,
+            billing_details: {
+              name: document.getElementById('f-cardname').value,
+              email: document.getElementById('f-email').value,
+              address: {
+                line1: document.getElementById('f-address').value,
+                city: document.getElementById('f-city').value,
+                state: document.getElementById('f-province').value,
+                postal_code: document.getElementById('f-postal').value,
+              }
+            }
+          }
+        });
+
+        if(error){
+          document.getElementById('stripe-error').textContent = error.message;
+          btn.textContent = 'Place Order';
+          btn.disabled = false;
+          return;
+        }
+
+        // 3. Payment succeeded!
+        if(paymentIntent.status === 'succeeded'){
+          const orderNum = 'VIS-' + Math.floor(100000+Math.random()*900000);
+          document.getElementById('success-order-num').textContent = 'Order #' + orderNum;
+          document.getElementById('success-info-bar').innerHTML = `
+            <div class="sib-item"><div class="sib-label">Items</div><div class="sib-value">${checkoutQty}</div></div>
+            <div class="sib-item"><div class="sib-label">Total</div><div class="sib-value">$${checkoutTotal.toFixed(2)}</div></div>
+            <div class="sib-item"><div class="sib-label">Ships In</div><div class="sib-value">3–5 Days</div></div>`;
+          clearCart();
+          document.getElementById('success-overlay').classList.add('show');
+        }
+
+      } catch(err) {
+        document.getElementById('stripe-error').textContent = 'Something went wrong. Please try again.';
+        btn.textContent = 'Place Order';
+        btn.disabled = false;
+      }
     });
   </script>
 </body>
