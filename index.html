@@ -50,9 +50,6 @@
     .btn-primary:hover { background: transparent; color: white; }
     .btn-ghost { display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted2); text-decoration: none; border-bottom: 1px solid var(--muted); padding-bottom: 2px; transition: all .2s; cursor: none; }
     .btn-ghost:hover { color: white; border-color: white; }
-    .hero-scroll-indicator { position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2; opacity: 0; animation: slideUp .7s .9s ease forwards; }
-    .hero-scroll-indicator span { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); }
-    .scroll-bar { width: 1px; height: 52px; background: linear-gradient(to bottom, var(--muted), transparent); animation: pulse 2.5s ease infinite; }
 
     .marquee-wrap { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px 0; overflow: hidden; }
     .marquee-inner { display: flex; width: max-content; animation: marquee 28s linear infinite; }
@@ -173,11 +170,13 @@
     <div class="marquee-inner">
       <div class="marquee-chunk">
         <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
         <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
         <div class="mq-item"><div class="mq-star"></div> See Different</div>
         <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
         <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
         <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
         <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
         <div class="mq-item"><div class="mq-star"></div> See Different</div>
         <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
@@ -185,11 +184,13 @@
       </div>
       <div class="marquee-chunk" aria-hidden="true">
         <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
         <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
         <div class="mq-item"><div class="mq-star"></div> See Different</div>
         <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
         <div class="mq-item"><div class="mq-star"></div> Vision Worldwide</div>
         <div class="mq-item"><div class="mq-star"></div> New Drop</div>
+        <div class="mq-item"><div class="mq-star"></div> SS25 Collection</div>
         <div class="mq-item"><div class="mq-star"></div> Free Shipping Over $150</div>
         <div class="mq-item"><div class="mq-star"></div> See Different</div>
         <div class="mq-item"><div class="mq-star"></div> Limited Quantities</div>
@@ -294,7 +295,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 VISION. All rights reserved.</p>
+      <p class="footer-copy">© 2025 VISION. All rights reserved.</p>
       <img class="footer-logo-bottom" src="visnoblo.png" alt="VISION" />
       <div class="footer-bottom-links">
         <a href="#">Privacy</a>
@@ -322,5 +323,6 @@
       a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
     });
   </script>
+  <script src="cart.js"></script>
 </body>
 </html>
