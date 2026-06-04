@@ -56,11 +56,9 @@
     `;
     document.body.appendChild(picker);
 
-    // Position near the card
     const rect = anchorEl.getBoundingClientRect();
     picker.style.top = (rect.top + window.scrollY - picker.offsetHeight - 12) + 'px';
     picker.style.left = (rect.left + rect.width/2 - 100) + 'px';
-    // Reposition after render
     requestAnimationFrame(() => {
       picker.style.top = (rect.top + window.scrollY - picker.offsetHeight - 12) + 'px';
       picker.style.left = Math.max(8, rect.left + rect.width/2 - picker.offsetWidth/2) + 'px';
@@ -74,7 +72,6 @@
       });
     });
 
-    // Close on outside click
     setTimeout(() => {
       document.addEventListener('click', outsidePickerClick);
     }, 10);
@@ -199,6 +196,7 @@
         font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic;
         font-size:15px; letter-spacing:3px; text-transform:uppercase; border:2px solid white;
         border-radius:999px; cursor:none; transition:all .3s; text-align:center; margin-bottom:12px;
+        text-decoration:none;
       }
       .vc-checkout-btn:hover { background:transparent; color:white; }
       .vc-continue-btn {
@@ -258,7 +256,7 @@
 
     const total = cart.reduce((s, i) => s + i.qty, 0);
     document.querySelectorAll('.nav-cart').forEach(el => {
-      el.querySelector('.vc-cart-num') 
+      el.querySelector('.vc-cart-num')
         ? el.querySelector('.vc-cart-num').textContent = total
         : null;
     });
@@ -307,7 +305,7 @@
         <span class="vc-subtotal-label">Subtotal</span>
         <span class="vc-subtotal-amt">$${subtotal.toFixed(2)}</span>
       </div>
-      <button class="vc-checkout-btn">Checkout</button>
+      <a href="checkout.html" class="vc-checkout-btn">Checkout</a>
       <button class="vc-continue-btn" onclick="window.__visionCart.closeCart()">Continue Shopping</button>
     `;
   }
