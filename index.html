@@ -36,6 +36,40 @@
     .nav-cart { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted2); transition: color .2s; position: relative; cursor: none; }
     .nav-cart:hover { color: white; }
 
+    /* ── HAMBURGER ─────────────────────────── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: none; padding: 6px; position: relative; z-index: 600; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: white; transition: all .3s ease; transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ───────────────────────── */
+    .mobile-menu {
+      position: fixed; inset: 0; background: #030303; z-index: 700;
+      display: flex; flex-direction: column; padding: 24px 28px 44px;
+      transform: translateX(100%); transition: transform .45s cubic-bezier(.23,1,.32,1);
+      overflow: hidden;
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mm-bg { position: absolute; width: 320px; height: 320px; bottom: -60px; right: -60px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .025; pointer-events: none; }
+    .mm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; position: relative; }
+    .mm-logo { height: 22px; }
+    .mm-close { background: none; border: none; color: #444; font-size: 20px; cursor: none; padding: 4px; transition: color .2s; line-height: 1; }
+    .mm-close:hover { color: white; }
+    .mm-links { display: flex; flex-direction: column; flex: 1; position: relative; }
+    .mm-links a {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic;
+      font-size: clamp(52px, 15vw, 76px); text-transform: uppercase; color: white;
+      text-decoration: none; line-height: 1.05; letter-spacing: -1px;
+      border-bottom: 1px solid #111; padding: 10px 0;
+      transition: color .2s, padding-left .2s;
+    }
+    .mm-links a:hover { color: #444; padding-left: 8px; }
+    .mm-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid #141414; margin-top: 20px; position: relative; }
+    .mm-cart-btn { background: none; border: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: #444; cursor: none; transition: color .2s; }
+    .mm-cart-btn:hover { color: white; }
+    .mm-tagline { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #222; }
+
     .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 160px 52px 120px; text-align: center; }
     .hero-radial { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 55% 45%, #191919 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 20% 80%, #111 0%, transparent 60%); }
     .hero-icon-bg { position: absolute; width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.03; animation: slowSpin 80s linear infinite; }
@@ -132,13 +166,82 @@
     @keyframes slideUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slowSpin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    @keyframes pulse { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
     a { cursor: none; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      #cursor, #cursor-ring { display: none; }
+      a, button { cursor: auto !important; }
+
+      nav { padding: 18px 22px; }
+      .nav-links { display: none; }
+      .nav-cart { display: none; } /* cart in mobile menu */
+      .hamburger { display: flex; }
+
+      .hero { padding: 110px 24px 80px; min-height: 90vh; }
+      .hero-icon-bg { width: 360px; height: 360px; }
+      .hero-logo-img { width: 200px; margin-bottom: 36px; }
+      .hero-eyebrow { margin-bottom: 24px; }
+      .hero-actions { flex-direction: column; gap: 16px; align-items: center; margin-top: 40px; }
+      .btn-primary { padding: 15px 40px; font-size: 14px; }
+
+      .mq-item { padding: 0 24px; font-size: 11px; gap: 20px; }
+
+      .drops-section { padding: 72px 22px; }
+      .section-row { flex-direction: column; gap: 20px; align-items: flex-start; margin-bottom: 36px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .product-name { font-size: 15px; }
+      .product-thumb { margin-bottom: 12px; }
+      /* show add button always on mobile */
+      .product-hover-add { transform: translateY(0); font-size: 11px; letter-spacing: 1px; padding: 12px; }
+
+      .statement-section { padding: 80px 22px; }
+      .statement-icon-bg { display: none; }
+      .statement-body { font-size: 14px; }
+      .statement-headline { margin-bottom: 24px; }
+
+      .banner-section { flex-direction: column; padding: 64px 22px; gap: 32px; text-align: center; }
+      .banner-icon-bg { display: none; }
+      .btn-dark { padding: 15px 40px; font-size: 15px; }
+
+      footer { padding: 64px 22px 40px; }
+      .footer-top { grid-template-columns: 1fr; gap: 40px; padding-bottom: 48px; }
+      .footer-brand-blurb { max-width: 100%; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-logo-bottom { display: none; }
+      .footer-bottom-links { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-logo-img { width: 160px; }
+      .product-grid { gap: 8px; }
+      .tee-shape, .hoodie-shape { transform: scale(0.7); }
+    }
   </style>
 </head>
 <body>
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mm-bg"></div>
+    <div class="mm-header">
+      <img src="visnoblo.png" alt="VISION" class="mm-logo" />
+      <button class="mm-close" id="mm-close">✕</button>
+    </div>
+    <div class="mm-links">
+      <a href="shop.html">Shop</a>
+      <a href="drops.html">Drops</a>
+      <a href="lookbook.html">Lookbook</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="mm-bottom">
+      <button class="mm-cart-btn nav-cart">Cart (0)</button>
+      <p class="mm-tagline">See Different</p>
+    </div>
+  </div>
 
   <nav>
     <div class="nav-logo"><a href="index.html"><img src="visnoblo.png" alt="VISION" /></a></div>
@@ -149,6 +252,9 @@
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="nav-cart">Cart (0)</div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <section class="hero">
@@ -312,16 +418,30 @@
     document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
     function animateRing() { rx += (mx-rx)*.12; ry += (my-ry)*.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
     animateRing();
+
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => { nav.style.backdropFilter = window.scrollY > 60 ? 'blur(20px)' : 'none'; });
+
     const cards = document.querySelectorAll('.product-card');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => { if (e.isIntersecting) { e.target.style.animation = `slideUp .6s ${i*.1}s ease forwards`; e.target.style.opacity = '0'; io.unobserve(e.target); } });
     }, { threshold: 0.15 });
     cards.forEach(c => { c.style.opacity = '0'; io.observe(c); });
+
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
     });
+
+    // ── Mobile menu ──────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mmClose = document.getElementById('mm-close');
+
+    function openMenu() { hamburger.classList.add('open'); mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }
+
+    hamburger?.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+    mmClose?.addEventListener('click', closeMenu);
   </script>
   <script src="cart.js"></script>
 </body>
