@@ -56,9 +56,11 @@
     `;
     document.body.appendChild(picker);
 
+    // Position near the card
     const rect = anchorEl.getBoundingClientRect();
     picker.style.top = (rect.top + window.scrollY - picker.offsetHeight - 12) + 'px';
     picker.style.left = (rect.left + rect.width/2 - 100) + 'px';
+    // Reposition after render
     requestAnimationFrame(() => {
       picker.style.top = (rect.top + window.scrollY - picker.offsetHeight - 12) + 'px';
       picker.style.left = Math.max(8, rect.left + rect.width/2 - picker.offsetWidth/2) + 'px';
@@ -72,6 +74,7 @@
       });
     });
 
+    // Close on outside click
     setTimeout(() => {
       document.addEventListener('click', outsidePickerClick);
     }, 10);
@@ -151,7 +154,7 @@
         height: 100%; text-align: center; gap: 12px;
       }
       .vc-empty-icon {
-        width: 64px; height: 64px; background-image: url('visnobic.png');
+        width: 64px; height: 64px; background-image: url('/visnobic.png');
         background-size: contain; background-repeat: no-repeat; opacity: .08; margin-bottom: 8px;
       }
       .vc-empty-title {
@@ -196,7 +199,6 @@
         font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic;
         font-size:15px; letter-spacing:3px; text-transform:uppercase; border:2px solid white;
         border-radius:999px; cursor:none; transition:all .3s; text-align:center; margin-bottom:12px;
-        text-decoration:none;
       }
       .vc-checkout-btn:hover { background:transparent; color:white; }
       .vc-continue-btn {
@@ -238,6 +240,16 @@
       }
       .vsp-btn:hover { border-color: white; color: white; background: rgba(255,255,255,.05); }
 
+      /* Mobile — disable custom cursor */
+      @media (max-width: 768px) {
+        .vc-close, .vc-qty-btn, .vc-remove, .vc-checkout-btn, .vc-continue-btn, .vsp-btn { cursor: auto !important; }
+        #vision-cart-sidebar { width: 100%; }
+        .vc-header { padding: 28px 24px 20px; }
+        .vc-title { font-size: 40px; }
+        .vc-items { padding: 20px 24px; }
+        .vc-footer { padding: 20px 24px 32px; }
+      }
+
       @keyframes vcSlideIn { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:translateX(0); } }
       @keyframes vcBump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
     `;
@@ -256,7 +268,7 @@
 
     const total = cart.reduce((s, i) => s + i.qty, 0);
     document.querySelectorAll('.nav-cart').forEach(el => {
-      el.querySelector('.vc-cart-num')
+      el.querySelector('.vc-cart-num') 
         ? el.querySelector('.vc-cart-num').textContent = total
         : null;
     });
@@ -305,7 +317,7 @@
         <span class="vc-subtotal-label">Subtotal</span>
         <span class="vc-subtotal-amt">$${subtotal.toFixed(2)}</span>
       </div>
-      <a href="checkout.html" class="vc-checkout-btn">Checkout</a>
+      <button class="vc-checkout-btn" onclick="window.open('/checkout/','_blank')">Checkout</button>
       <button class="vc-continue-btn" onclick="window.__visionCart.closeCart()">Continue Shopping</button>
     `;
   }
