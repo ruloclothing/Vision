@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VISION — Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,700;1,300;1,700;1,800;1,900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080808; --surface: #101010; --surface2: #161616;
+      --border: #1c1c1c; --text: #ffffff; --muted: #555555; --muted2: #888888;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; overflow-x: hidden; cursor: none; }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04; pointer-events: none; z-index: 9000;
+    }
+
+    /* CURSOR */
+    #cursor { position: fixed; width: 10px; height: 10px; background: white; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .15s, height .15s; mix-blend-mode: difference; }
+    #cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .25s cubic-bezier(.23,1,.32,1); mix-blend-mode: difference; }
+    body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 18px; height: 18px; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 60px; height: 60px; opacity: 0; }
+    a { cursor: none; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 28px 52px; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); background: rgba(8,8,8,.92); }
+    .nav-logo img { height: 28px; position: relative; }
+    .nav-links { display: flex; gap: 44px; list-style: none; }
+    .nav-links a { color: var(--muted2); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: white; }
+    .nav-cart { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted2); transition: color .2s; cursor: none; }
+    .nav-cart:hover { color: white; }
+
+    /* PAGE HEADER */
+    .page-header { padding: 160px 52px 72px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .page-header-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, #141414 0%, transparent 70%); }
+    .page-header-icon { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); width: 500px; height: 500px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .03; }
+    .page-header-content { position: relative; z-index: 1; }
+    .page-header-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; opacity: 0; animation: slideUp .6s .1s ease forwards; }
+    .page-header-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: clamp(64px,9vw,120px); text-transform: uppercase; line-height: .9; letter-spacing: -2px; opacity: 0; animation: slideUp .6s .2s ease forwards; }
+    .page-header-title .stroke { -webkit-text-stroke: 2px white; color: transparent; }
+    .page-header-meta { display: flex; align-items: center; gap: 32px; margin-top: 28px; opacity: 0; animation: slideUp .6s .35s ease forwards; }
+    .meta-count { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .meta-divider { width: 1px; height: 14px; background: var(--border); }
+
+    /* SHOP LAYOUT */
+    .shop-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 200px); }
+
+    /* SIDEBAR */
+    .sidebar { border-right: 1px solid var(--border); padding: 52px 36px; position: sticky; top: 85px; height: fit-content; opacity: 0; animation: slideUp .6s .4s ease forwards; }
+    .filter-group { margin-bottom: 40px; }
+    .filter-group:last-child { margin-bottom: 0; }
+    .filter-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .filter-options { display: flex; flex-direction: column; gap: 10px; }
+    .filter-btn { background: none; border: none; color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; text-align: left; padding: 0; cursor: none; transition: color .2s; display: flex; justify-content: space-between; align-items: center; }
+    .filter-btn:hover { color: white; }
+    .filter-btn.active { color: white; }
+    .filter-btn.active::after { content: ''; width: 5px; height: 5px; background: white; border-radius: 50%; }
+    .filter-divider { height: 1px; background: var(--border); margin: 4px 0; }
+    .sort-select { background: var(--surface); border: 1px solid var(--border); color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; border-radius: 4px; width: 100%; cursor: none; outline: none; appearance: none; }
+
+    /* PRODUCT GRID AREA */
+    .grid-area { padding: 52px 48px; }
+    .grid-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); opacity: 0; animation: slideUp .6s .45s ease forwards; }
+    .toolbar-left { display: flex; align-items: center; gap: 8px; }
+    .active-filter-tag { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); }
+    .tag-remove { background: none; border: none; color: var(--muted); cursor: none; font-size: 14px; line-height: 1; padding: 0; margin-left: 2px; transition: color .2s; }
+    .tag-remove:hover { color: white; }
+    .toolbar-right { display: flex; align-items: center; gap: 20px; }
+    .view-toggle { display: flex; gap: 4px; }
+    .view-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 10px; border-radius: 4px; cursor: none; transition: all .2s; font-size: 14px; }
+    .view-btn.active, .view-btn:hover { border-color: white; color: white; }
+
+    /* PRODUCT GRID */
+    .product-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .product-grid.two-col { grid-template-columns: repeat(2,1fr); }
+    .product-card { cursor: none; opacity: 0; }
+    .product-card.visible { animation: slideUp .5s ease forwards; }
+    .product-thumb { aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; position: relative; margin-bottom: 16px; transition: transform .4s cubic-bezier(.23,1,.32,1); }
+    .product-card:hover .product-thumb { transform: scale(1.02); }
+    .thumb-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+    /* Product color variations */
+    .p1 .thumb-inner { background: linear-gradient(160deg,#141414 0%,#0d0d0d 100%); }
+    .p2 .thumb-inner { background: linear-gradient(160deg,#0c0c0c 0%,#1a1a1a 100%); }
+    .p3 .thumb-inner { background: linear-gradient(180deg,#101010 0%,#181818 100%); }
+    .p4 .thumb-inner { background: linear-gradient(140deg,#171717 0%,#0b0b0b 100%); }
+    .p5 .thumb-inner { background: linear-gradient(155deg,#121212 0%,#1e1e1e 100%); }
+    .p6 .thumb-inner { background: linear-gradient(170deg,#0e0e0e 0%,#161616 100%); }
+    .p7 .thumb-inner { background: linear-gradient(145deg,#1a1a1a 0%,#0a0a0a 100%); }
+    .p8 .thumb-inner { background: linear-gradient(165deg,#131313 0%,#1c1c1c 100%); }
+
+    /* Clothing shapes */
+    .tee-shape { width: 80px; height: 90px; position: relative; }
+    .tee-shape::before { content: ''; position: absolute; bottom: 0; left: 10px; width: 60px; height: 70px; background: rgba(255,255,255,.07); border-radius: 3px 3px 6px 6px; }
+    .tee-shape::after { content: ''; position: absolute; top: 0; left: 0; width: 80px; height: 30px; background: rgba(255,255,255,.07); clip-path: polygon(20px 0,60px 0,70px 14px,80px 14px,80px 30px,60px 30px,60px 14px,20px 14px,20px 30px,0 30px,0 14px,10px 14px); }
+    .hoodie-shape { width: 84px; height: 96px; position: relative; }
+    .hoodie-shape::before { content: ''; position: absolute; bottom: 0; left: 8px; width: 68px; height: 76px; background: rgba(255,255,255,.07); border-radius: 3px 3px 8px 8px; }
+    .hoodie-shape::after { content: ''; position: absolute; top: 0; left: 0; width: 84px; height: 36px; background: rgba(255,255,255,.07); clip-path: polygon(18px 0,66px 0,84px 20px,84px 36px,66px 36px,66px 20px,18px 20px,18px 36px,0 36px,0 20px); }
+    .cap-shape { width: 88px; height: 60px; position: relative; }
+    .cap-shape::before { content: ''; position: absolute; top: 0; left: 8px; width: 72px; height: 50px; background: rgba(255,255,255,.07); border-radius: 36px 36px 4px 4px; }
+    .cap-shape::after { content: ''; position: absolute; bottom: 0; left: 0; width: 52px; height: 14px; background: rgba(255,255,255,.07); border-radius: 0 0 4px 4px; }
+    .pants-shape { width: 70px; height: 96px; position: relative; }
+    .pants-shape::before { content: ''; position: absolute; top: 0; left: 5px; width: 60px; height: 44px; background: rgba(255,255,255,.07); border-radius: 4px 4px 0 0; }
+    .pants-shape::after { content: ''; position: absolute; bottom: 0; left: 0; width: 70px; height: 58px; background: rgba(255,255,255,.07); clip-path: polygon(0 0, 30px 0, 35px 58px, 40px 0, 70px 0, 70px 58px, 40px 58px, 35px 10px, 30px 58px, 0 58px); }
+
+    .product-icon-overlay { position: absolute; bottom: 18px; right: 16px; width: 40px; height: 40px; background-image: url('visnobic.png'); background-size: contain; background-repeat: no-repeat; opacity: .1; transition: opacity .3s; }
+    .product-card:hover .product-icon-overlay { opacity: .25; }
+    .product-badge-tag { position: absolute; top: 14px; left: 14px; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; }
+    .badge-sold { background: #333; color: #777; }
+    .product-hover-add { position: absolute; bottom: 0; left: 0; right: 0; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; text-align: center; padding: 14px; transform: translateY(100%); transition: transform .3s cubic-bezier(.23,1,.32,1); cursor: none; }
+    .product-card:hover .product-hover-add { transform: translateY(0); }
+    .sold-out .product-hover-add { background: #222; color: #555; }
+    .product-sizes { position: absolute; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 3px; opacity: 0; transition: opacity .2s; }
+    .product-card:hover .product-sizes { opacity: 1; }
+    .size-dot { width: 22px; height: 22px; background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.15); border-radius: 3px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: rgba(255,255,255,.6); display: flex; align-items: center; justify-content: center; }
+    .size-dot.out { opacity: .3; text-decoration: line-through; }
+    .product-info { padding: 0 2px; }
+    .product-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .product-foot { display: flex; justify-content: space-between; align-items: center; }
+    .product-type { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
+    .product-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 1px; }
+    .price-sold { color: var(--muted); text-decoration: line-through; }
+
+    /* EMPTY STATE */
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 100px 20px; display: none; }
+    .empty-state.visible { display: block; }
+    .empty-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 48px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .empty-sub { font-size: 13px; color: #333; letter-spacing: 1px; }
+
+    /* LOAD MORE */
+    .load-more-wrap { text-align: center; padding: 64px 0 20px; opacity: 0; animation: slideUp .6s .8s ease forwards; }
+    .btn-load { display: inline-block; padding: 16px 52px; background: transparent; color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; border: 1px solid var(--border); border-radius: 999px; cursor: none; transition: all .3s; }
+    .btn-load:hover { border-color: white; color: white; }
+
+    /* QUICK VIEW OVERLAY */
+    .quick-view-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 800; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    .quick-view-overlay.open { display: flex; }
+    .quick-view-modal { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; width: 840px; max-width: 92vw; max-height: 88vh; overflow: auto; display: grid; grid-template-columns: 1fr 1fr; position: relative; animation: modalIn .3s cubic-bezier(.23,1,.32,1) forwards; }
+    .qv-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--muted2); font-size: 22px; cursor: none; z-index: 1; transition: color .2s; }
+    .qv-close:hover { color: white; }
+    .qv-image { aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--border); position: relative; overflow: hidden; }
+    .qv-details { padding: 48px 44px; display: flex; flex-direction: column; }
+    .qv-type { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .qv-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 40px; text-transform: uppercase; line-height: .95; margin-bottom: 20px; }
+    .qv-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: 1px; margin-bottom: 36px; }
+    .qv-size-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .qv-sizes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+    .size-pill { background: none; border: 1px solid var(--border); color: var(--muted2); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-style: italic; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 4px; cursor: none; transition: all .2s; }
+    .size-pill:hover, .size-pill.selected { border-color: white; color: white; }
+    .size-pill.out-of-stock { opacity: .25; pointer-events: none; }
+    .qv-add-btn { display: block; width: 100%; padding: 17px; background: white; color: black; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-style: italic; font-size: 15px; letter-spacing: 3px; text-transform: uppercase; border: 2px solid white; border-radius: 999px; cursor: none; transition: all .3s; margin-bottom: 16px; }
+    .qv-add-btn:hover { background: transparent; color: white; }
+    .qv-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; margin-top: auto; padding-top: 28px; border-top: 1px solid var(--border); }
+
+    @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes modalIn { from { opacity: 0; transform: scale(.96) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <nav>
+    <div class="nav-logo"><a href="index.html"><img src="visnoblo.png" alt="VISION" /></a></div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Shop</a></li>
+      <li><a href="#">Drops</a></li>
+      <li><a href="#">Lookbook</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <div class="nav-cart">Cart (<span id="cart-count">0</span>)</div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-icon"></div>
+    <div class="page-header-content">
+      <p class="page-header-eyebrow">SS25 Collection</p>
+      <h1 class="page-header-title">All <span class="stroke">Products</span></h1>
+      <div class="page-header-meta">
+        <span class="meta-count" id="product-count">12 Items</span>
+        <div class="meta-divider"></div>
+        <span class="meta-count">SS25 Season</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHOP LAYOUT -->
+  <div class="shop-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="filter-group">
+        <p class="filter-label">Category</p>
+        <div class="filter-options">
+          <button class="filter-btn active" data-filter="all">All <span></span></button>
+          <div class="filter-divider"></div>
+          <button class="filter-btn" data-filter="tee">T-Shirts</button>
+          <button class="filter-btn" data-filter="hoodie">Hoodies</button>
+          <button class="filter-btn" data-filter="crewneck">Crewnecks</button>
+          <button class="filter-btn" data-filter="pants">Pants</button>
+          <button class="filter-btn" data-filter="accessories">Accessories</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Availability</p>
+        <div class="filter-options">
+          <button class="filter-btn" data-filter="in-stock">In Stock Only</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">Sort By</p>
+        <select class="sort-select" id="sort-select">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="newest">Newest First</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- GRID AREA -->
+    <div class="grid-area">
+      <div class="grid-toolbar">
+        <div class="toolbar-left" id="active-filters">
+          <!-- Active filter tags injected here -->
+        </div>
+        <div class="toolbar-right">
+          <div class="view-toggle">
+            <button class="view-btn active" id="view-3" title="3 columns">⊞</button>
+            <button class="view-btn" id="view-2" title="2 columns">▦</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+
+        <div class="product-card p1" data-type="tee" data-price="58" data-order="1">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="tee-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">New</div>
+            <div class="product-sizes">
+              <div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot">L</div><div class="size-dot out">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Core Tee — Black" data-price="$58" data-type="T-Shirt">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Core Tee — Black</div>
+            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$58</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p2" data-type="hoodie" data-price="128" data-order="2">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="hoodie-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">Best Seller</div>
+            <div class="product-sizes">
+              <div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot">L</div><div class="size-dot">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Spark Hoodie" data-price="$128" data-type="Hoodie">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Spark Hoodie</div>
+            <div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price">$128</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p3" data-type="tee" data-price="62" data-order="3">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="tee-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-sizes">
+              <div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot out">L</div><div class="size-dot out">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Halftone Tee" data-price="$62" data-type="T-Shirt">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Halftone Tee</div>
+            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$62</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p4" data-type="crewneck" data-price="114" data-order="4">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="hoodie-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">Limited</div>
+            <div class="product-sizes">
+              <div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot out">L</div><div class="size-dot out">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Stellar Crewneck" data-price="$114" data-type="Crewneck">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Stellar Crewneck</div>
+            <div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$114</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p5" data-type="tee" data-price="66" data-order="5">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="tee-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">New</div>
+            <div class="product-sizes">
+              <div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot">L</div><div class="size-dot">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Ghost Tee — Slate" data-price="$66" data-type="T-Shirt">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Ghost Tee — Slate</div>
+            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$66</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p6" data-type="pants" data-price="148" data-order="6">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="pants-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-sizes">
+              <div class="size-dot">28</div><div class="size-dot">30</div>
+              <div class="size-dot">32</div><div class="size-dot out">34</div>
+            </div>
+            <div class="product-hover-add" data-product="Void Cargo Pant" data-price="$148" data-type="Pants">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Void Cargo Pant</div>
+            <div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$148</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p7 sold-out" data-type="hoodie" data-price="136" data-order="7" data-sold="true">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="hoodie-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag badge-sold">Sold Out</div>
+            <div class="product-hover-add">Sold Out</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Fracture Hoodie</div>
+            <div class="product-foot"><span class="product-type">Hoodie</span><span class="product-price price-sold">$136</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p8" data-type="accessories" data-price="44" data-order="8">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="cap-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">New</div>
+            <div class="product-sizes">
+              <div class="size-dot">OS</div>
+            </div>
+            <div class="product-hover-add" data-product="Logo Cap — Black" data-price="$44" data-type="Accessories">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Logo Cap — Black</div>
+            <div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$44</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p1" data-type="crewneck" data-price="108" data-order="9">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="hoodie-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-sizes">
+              <div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot">L</div><div class="size-dot">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Outline Crewneck" data-price="$108" data-type="Crewneck">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Outline Crewneck</div>
+            <div class="product-foot"><span class="product-type">Crewneck</span><span class="product-price">$108</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p3" data-type="tee" data-price="54" data-order="10">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="tee-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-sizes">
+              <div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div>
+              <div class="size-dot">L</div><div class="size-dot">XL</div>
+            </div>
+            <div class="product-hover-add" data-product="Signal Tee — Charcoal" data-price="$54" data-type="T-Shirt">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Signal Tee — Charcoal</div>
+            <div class="product-foot"><span class="product-type">T-Shirt</span><span class="product-price">$54</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p5" data-type="pants" data-price="158" data-order="11">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="pants-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-badge-tag">Limited</div>
+            <div class="product-sizes">
+              <div class="size-dot">28</div><div class="size-dot">30</div>
+              <div class="size-dot out">32</div><div class="size-dot out">34</div>
+            </div>
+            <div class="product-hover-add" data-product="Eclipse Track Pant" data-price="$158" data-type="Pants">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Eclipse Track Pant</div>
+            <div class="product-foot"><span class="product-type">Pants</span><span class="product-price">$158</span></div>
+          </div>
+        </div>
+
+        <div class="product-card p6" data-type="accessories" data-price="38" data-order="12">
+          <div class="product-thumb">
+            <div class="thumb-inner"><div class="cap-shape"></div></div>
+            <div class="product-icon-overlay"></div>
+            <div class="product-sizes">
+              <div class="size-dot">OS</div>
+            </div>
+            <div class="product-hover-add" data-product="Vision Beanie" data-price="$38" data-type="Accessories">Quick View</div>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Vision Beanie</div>
+            <div class="product-foot"><span class="product-type">Accessories</span><span class="product-price">$38</span></div>
+          </div>
+        </div>
+
+        <div class="empty-state" id="empty-state">
+          <p class="empty-title">No Results</p>
+          <p class="empty-sub">Try a different filter</p>
+        </div>
+
+      </div>
+
+      <div class="load-more-wrap">
+        <button class="btn-load">Load More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="quick-view-overlay" id="qv-overlay">
+    <div class="quick-view-modal" id="qv-modal">
+      <button class="qv-close" id="qv-close">✕</button>
+      <div class="qv-image" id="qv-image">
+        <div class="tee-shape" id="qv-shape"></div>
+        <div class="product-icon-overlay" style="opacity:.08; bottom:28px; right:24px; width:60px; height:60px;"></div>
+      </div>
+      <div class="qv-details">
+        <p class="qv-type" id="qv-type">T-Shirt</p>
+        <h2 class="qv-name" id="qv-name">Core Tee — Black</h2>
+        <p class="qv-price" id="qv-price">$58</p>
+        <p class="qv-size-label">Select Size</p>
+        <div class="qv-sizes" id="qv-sizes">
+          <button class="size-pill selected">XS</button>
+          <button class="size-pill">S</button>
+          <button class="size-pill">M</button>
+          <button class="size-pill">L</button>
+          <button class="size-pill out-of-stock">XL</button>
+        </div>
+        <button class="qv-add-btn" id="qv-add-btn">Add to Cart</button>
+        <p class="qv-desc">Premium heavyweight cotton. Relaxed oversized fit. VISION wordmark screenprinted on chest. Garment washed for softness. Limited to 200 units per colorway.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let rx = 0, ry = 0, mx = 0, my = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+    function animateRing() { rx += (mx-rx)*.12; ry += (my-ry)*.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animateRing); }
+    animateRing();
+
+    // Staggered card reveal on load
+    const cards = document.querySelectorAll('.product-card:not(.empty-state)');
+    cards.forEach((c, i) => {
+      c.style.animationDelay = `${0.5 + i * 0.06}s`;
+      c.classList.add('visible');
+    });
+
+    // Filtering
+    let activeFilter = 'all';
+    let stockOnly = false;
+
+    const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter;
+        if (f === 'in-stock') {
+          stockOnly = !stockOnly;
+          btn.classList.toggle('active', stockOnly);
+        } else {
+          filterBtns.forEach(b => { if (b.dataset.filter !== 'in-stock') b.classList.remove('active'); });
+          btn.classList.add('active');
+          activeFilter = f;
+        }
+        applyFilters();
+      });
+    });
+
+    function applyFilters() {
+      const allCards = document.querySelectorAll('.product-card[data-type]');
+      let visible = 0;
+      allCards.forEach(c => {
+        const typeMatch = activeFilter === 'all' || c.dataset.type === activeFilter;
+        const stockMatch = !stockOnly || !c.dataset.sold;
+        const show = typeMatch && stockMatch;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      document.getElementById('product-count').textContent = `${visible} Item${visible !== 1 ? 's' : ''}`;
+      document.getElementById('empty-state').classList.toggle('visible', visible === 0);
+      updateFilterTags();
+    }
+
+    function updateFilterTags() {
+      const container = document.getElementById('active-filters');
+      container.innerHTML = '';
+      if (activeFilter !== 'all') {
+        const tag = document.createElement('div');
+        tag.className = 'active-filter-tag';
+        tag.innerHTML = `${activeFilter} <button class="tag-remove" onclick="clearFilter('type')">✕</button>`;
+        container.appendChild(tag);
+      }
+      if (stockOnly) {
+        const tag = document.createElement('div');
+        tag.className = 'active-filter-tag';
+        tag.innerHTML = `In Stock <button class="tag-remove" onclick="clearFilter('stock')">✕</button>`;
+        container.appendChild(tag);
+      }
+    }
+
+    window.clearFilter = function(type) {
+      if (type === 'type') {
+        activeFilter = 'all';
+        filterBtns.forEach(b => { if (b.dataset.filter !== 'in-stock') b.classList.remove('active'); });
+        document.querySelector('[data-filter="all"]').classList.add('active');
+      } else {
+        stockOnly = false;
+        document.querySelector('[data-filter="in-stock"]').classList.remove('active');
+      }
+      applyFilters();
+    };
+
+    // Sort
+    document.getElementById('sort-select').addEventListener('change', function() {
+      const grid = document.getElementById('product-grid');
+      const items = [...grid.querySelectorAll('.product-card[data-type]')];
+      items.sort((a, b) => {
+        if (this.value === 'price-asc') return +a.dataset.price - +b.dataset.price;
+        if (this.value === 'price-desc') return +b.dataset.price - +a.dataset.price;
+        if (this.value === 'newest') return +b.dataset.order - +a.dataset.order;
+        return +a.dataset.order - +b.dataset.order;
+      });
+      items.forEach(el => grid.insertBefore(el, grid.querySelector('.empty-state')));
+    });
+
+    // View toggle
+    document.getElementById('view-3').addEventListener('click', function() {
+      document.getElementById('product-grid').classList.remove('two-col');
+      this.classList.add('active');
+      document.getElementById('view-2').classList.remove('active');
+    });
+    document.getElementById('view-2').addEventListener('click', function() {
+      document.getElementById('product-grid').classList.add('two-col');
+      this.classList.add('active');
+      document.getElementById('view-3').classList.remove('active');
+    });
+
+    // Quick View
+    const overlay = document.getElementById('qv-overlay');
+    document.querySelectorAll('.product-hover-add[data-product]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('qv-name').textContent = btn.dataset.product;
+        document.getElementById('qv-price').textContent = btn.dataset.price;
+        document.getElementById('qv-type').textContent = btn.dataset.type;
+        overlay.classList.add('open');
+      });
+    });
+    document.getElementById('qv-close').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+
+    // Size pill selection
+    document.querySelectorAll('.size-pill').forEach(pill => {
+      pill.addEventListener('click', function() {
+        document.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    // Add to cart
+    let cartCount = 0;
+    document.getElementById('qv-add-btn').addEventListener('click', () => {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
+      overlay.classList.remove('open');
+    });
+  </script>
+</body>
+</html>
